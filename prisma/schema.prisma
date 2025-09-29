@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusPedido{
+  PENDENTE
+  EM_PREPARO
+  CONCLUIDO
+  CANCELADO
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  nome      String
+  senha     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relações: um usuário pode ter vários estabelecimentos e fazer vários pedidos
+  estabelecimentos Estabelecimento[]
+  pedidos          Pedido[]
+
+  @@map("usuarios")
+}
+
+model Estabelecimento {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  endereco  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Chave estrangeira (FK) para o usuário dono do estabelecimento
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  // Relações: um estabelecimento tem vários produtos e recebe vários pedidos
+  produtos  Produto[]
+  pedidos   Pedido[]
+
+  @@map("estabelecimentos")
+}
+
+model Produto {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  preco       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Chave estrangeira (FK) para o estabelecimento ao qual o produto pertence
+  estabelecimentoId Int
+  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])
+
+  itensDePedido PedidoItem[]
+
+  @@map("produtos")
+}
+
+model Pedido {
+  id        Int          @id @default(autoincrement())
+  total     Float
+  status    StatusPedido @default(PENDENTE)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  // Chave estrangeira (FK) para o estabelecimento de onde o pedido foi feito
+  estabelecimentoId Int
+  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])
+
+  itens PedidoItem[]
+
+  @@map("pedidos")
+}
+
+model PedidoItem {
+  id            Int      @id @default(autoincrement())
+  quantidade    Int
+  precoUnitario Float // Armazena o preço no momento da compra para histórico
+
+  pedidoId  Int
+  pedido    Pedido @relation(fields: [pedidoId], references: [id])
+
+  produtoId Int
+  produto   Produto @relation(fields: [produtoId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("pedido_itens")
+}

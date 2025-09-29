@@ -1,0 +1,20 @@
+# Node modules locais não precisam ir pro container
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+
+# Arquivos de ambiente
+.env
+
+# Diretórios de build locais
+dist
+
+# Logs
+*.log
+
+# Configurações de editor/IDE
+.vscode
+.idea
+
+# Dockerfile e docker-compose já estão na raiz, então não ignora eles

@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:17
+    container_name: postgres-delivery
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: deliverydb123
+      POSTGRES_DB: deliverydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: node-delivery
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://postgres:deliverydb123@db:5432/deliverydb?schema=public
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  db_data:
