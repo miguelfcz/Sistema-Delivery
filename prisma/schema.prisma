@@ -29,7 +29,6 @@ model Usuario {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relações: um usuário pode ter vários estabelecimentos e fazer vários pedidos
   estabelecimentos Estabelecimento[]
   pedidos          Pedido[]
 
@@ -43,11 +42,9 @@ model Estabelecimento {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Chave estrangeira (FK) para o usuário dono do estabelecimento
   usuarioId Int
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
-  // Relações: um estabelecimento tem vários produtos e recebe vários pedidos
   produtos  Produto[]
   pedidos   Pedido[]
 
@@ -62,7 +59,6 @@ model Produto {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  // Chave estrangeira (FK) para o estabelecimento ao qual o produto pertence
   estabelecimentoId Int
   estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])
 
@@ -81,7 +77,6 @@ model Pedido {
   usuarioId Int
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
-  // Chave estrangeira (FK) para o estabelecimento de onde o pedido foi feito
   estabelecimentoId Int
   estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])
 
@@ -93,7 +88,7 @@ model Pedido {
 model PedidoItem {
   id            Int      @id @default(autoincrement())
   quantidade    Int
-  precoUnitario Float // Armazena o preço no momento da compra para histórico
+  precoUnitario Float
 
   pedidoId  Int
   pedido    Pedido @relation(fields: [pedidoId], references: [id])
