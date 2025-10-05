@@ -20,12 +20,14 @@ export const loginService = async (credentials: any) => {
     }
 
     const jwtSecret = process.env.JWT_SECRET;
+
+    
     if (!jwtSecret) {
         throw new Error('JWT_SECRET não está definido nas variáveis de ambiente');
     }
 
     const token = jwt.sign({
-        userId: user.id,
+        usuarioId: user.id,
         email: user.email
     }, jwtSecret, { expiresIn: '8h'});
 

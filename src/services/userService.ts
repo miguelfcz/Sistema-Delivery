@@ -30,3 +30,22 @@ const usuarioService = {
 };
     
 export default usuarioService;
+
+export const getUsuarioProfileService = async (usuarioId: number) => {
+  const usuario = await prisma.usuario.findUnique({
+    where: { id: usuarioId },
+    select: {
+      id: true,
+      nome: true,
+      email: true,
+      createdAt: true,
+      updatedAt: true,
+    }
+  });
+
+  if (!usuario) {
+    throw new Error("Usuário não encontrado.");
+  }
+
+  return usuario;
+}
