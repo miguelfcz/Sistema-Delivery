@@ -1,4 +1,6 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
@@ -7,8 +9,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use('/usuarios', userRoute);
-app.use('/auth', authRoute);
+app.use('/api', userRoute);
+app.use('/api', authRoute);
 
 app.get('/', (req, res) => {
     res.send("Sistema de Delivery API")
