@@ -54,3 +54,37 @@ Com os contêineres rodando, abra um novo terminal e execute o seguinte comando 
 ```bash
 docker-compose exec app npx prisma migrate dev --name init
 ```
+# Documentação da API - Sistema de Delivery
+
+Esta é a documentação completa para todos os endpoints do backend do Sistema de Delivery.
+
+## Autenticação
+
+As rotas protegidas (marcadas com 🔐) exigem um token de autenticação no cabeçalho da requisição:
+
+`Authorization: Bearer <seu_token_jwt>`
+
+---
+
+### 1. Autenticação
+
+#### `POST /api/auth/login`
+
+Autentica um usuário existente e retorna um token JWT para ser usado nas rotas protegidas.
+
+**Request Body:**
+```json
+{
+  "email": "seu-email@exemplo.com",
+  "senha": "sua-senha"
+}
+```
+Responses:
+
+* 200 OK: Login bem-sucedido. Retorna o token.
+  ```json
+  {
+   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+  ```
+
