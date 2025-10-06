@@ -1,11 +1,13 @@
 import { Router } from "express";
-import usuarioController, {getUsuarioProfileController} from "../controllers/userController";
+import usuarioController, { getUsuarioProfileController } from "../controllers/userController";
 import { authMiddleware } from "../middleware/authMiddleware";
+
+console.log("--- [userRoute.ts] Arquivo de rotas de usuário foi carregado! ---");
 
 const userRoute = Router();
 
-userRoute.post("/usuarios", usuarioController.createUsuario);
+userRoute.post("/", usuarioController.createUsuario);
 
-userRoute.get("/usuarios/profile", authMiddleware, getUsuarioProfileController);
+userRoute.get("/profile", authMiddleware, getUsuarioProfileController);
 
 export default userRoute;
