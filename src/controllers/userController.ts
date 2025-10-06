@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import  usuarioService, { UsuarioSemSenha } from "../services/userService";
+import usuarioService, { UsuarioSemSenha } from "../services/userService";
 import { getUsuarioProfileService } from "../services/userService";
+import { ZodError } from "zod";
+import { createUserSchema } from "../validators/userValidator";
 
 interface AuthRequest extends Request {
     user?: { id: number };
@@ -9,11 +11,22 @@ interface AuthRequest extends Request {
 const usuarioController = {
     async createUsuario(req: Request, res: Response){
         try {
-            const { nome, email, senha} = req.body;
-            const novoUsuario: UsuarioSemSenha = await usuarioService.createUsuario({nome, email, senha});
+            const { body } = createUserSchema.parse(req);
+            
+            const novoUsuario: UsuarioSemSenha = await usuarioService.createUsuario(body);
             res.status(201).json(novoUsuario);
+            
         } catch (error) {
-            res.status(400).json({error: (error as Error).message});
+            if (error instanceof ZodError) {
+                return res.status(400).json({ 
+                    message: "Erro de validação.",
+                    issues: error.issues 
+                });
+            }
+            if (error instanceof Error) {
+                return res.status(400).json({ error: error.message });
+            }
+            return res.status(500).json("Erro interno no servidor." );
         }
     }
 }
@@ -25,7 +38,7 @@ export const getUsuarioProfileController = async (req: AuthRequest, res: Respons
         const usuarioId = req.user?.id;
 
         if (!usuarioId) {
-            return res.status(401).json("Usuário não autenticado");
+            return res.status(401).json({ message: "Usuário não autenticado" });
         }
 
         const usuarioProfile = await getUsuarioProfileService(usuarioId);

@@ -7,9 +7,9 @@
             "port": 5432,
             "driver": "PostgreSQL",
             "name": "delivery db",
+            "database": "postgres",
             "password": "deliverydb123",
-            "username": "postgres",
-            "database": "postgres"
+            "username": "postgres"
         }
     ]
 }
