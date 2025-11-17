@@ -21,7 +21,7 @@ app.use('/api/produtos', produtoRoute);
 app.use('/api/pedidos', pedidoRoute);
 
 app.get('/', (req, res) => {
-    res.send("Sistema de Delivery API - Documentação disponível em /api-docs")
+    res.send("Cardapio Digital API - Documentação disponível em /api-docs")
 });
 
 app.listen(port, ()=> {

@@ -11,4 +11,8 @@ router.get('/', authMiddleware, pedidoController.findAllByUser);
 
 router.patch('/:id/cancelar', authMiddleware, pedidoController.cancelar);
 
+router.patch('/estabelecimento', authMiddleware, pedidoController.findAllByEstabelecimento);
+
+router.patch('/:id/status', authMiddleware, pedidoController.updateStatus);
+
 export default router;

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { StatusPedido } from '../../generated/prisma';
 import { PedidoService } from '../services/pedidoService';
 
 const pedidoService = new PedidoService();
@@ -10,7 +11,7 @@ interface AuthRequest extends Request {
 export class PedidoController {
 
     async create(req: AuthRequest, res: Response): Promise<Response> {
-        const { estabelecimentoId, itens } = req.body;
+        const { estabelecimentoId, itens, mesa } = req.body;
 
         if (!req.user) {
             return res.status(401).json({ message: 'Acesso não autorizado.' });
@@ -22,7 +23,7 @@ export class PedidoController {
         }
 
         try {
-            const novoPedido = await pedidoService.createPedido({ usuarioId, estabelecimentoId, itens });
+            const novoPedido = await pedidoService.createPedido({ usuarioId, estabelecimentoId, itens, mesa });
             return res.status(201).json(novoPedido);
         } catch (error) {
             if (error instanceof Error) {
@@ -72,6 +73,59 @@ export class PedidoController {
                 }
             }
             return res.status(500).json({ message: 'Um erro inesperado ocorreu ao cancelar o pedido.' });
+        }
+    }
+
+    async findAllByEstabelecimento(req: AuthRequest, res: Response): Promise<Response> {
+        const {id} = req.query;
+
+        if (!req.user) {
+            return res.status(401).json({message: 'Acesso não autorizado.'});
+        }
+
+        if (!id) {
+            return res.status(400).json({message: 'O parâmetro estabelecimentoId é obrigatório.'});
+        }
+
+        const usuarioDonoId = req.user.id;
+        const estabelecimentoId = parseInt(id as string);
+
+        try {
+            const pedidos = await pedidoService.findPedidoByEstabelecimento(estabelecimentoId, usuarioDonoId);
+            return res.status(200).json(pedidos);
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.message.includes('Estabelecimento não encontrado')) return res.status(404).json({message: error.message});
+                if (error.message.includes('Permissão negada')) return res.status(403).json({message: error.message});
+            }
+            return res.status(500).json({message: 'Erro interno ao listar pedidos do estabelecimento.'});
+        }
+    }
+
+    async updateStatus(req: AuthRequest, res: Response): Promise<Response> {
+        const pedidoId = parseInt(req.params.id);
+        const { status } = req.body;
+
+        if (!req.user) {
+            return res.status(401).json({ message: 'Acesso não autorizado.' });
+        }
+
+        if (!status || !Object.values(StatusPedido).includes(status)) {
+            return res.status(400).json({ message: 'Status inválido ou não fornecido.' });
+        }
+
+        const usuarioDonoId = req.user.id;
+
+        try{
+            const pedidoAtualizado = await pedidoService.updateStatusPedido(pedidoId, status, usuarioDonoId);
+            return res.status(200).json(pedidoAtualizado);
+        } catch (error) {
+            if (error instanceof Error) {
+                if (error.message.includes('Pedido não encontrado')) return res.status(404).json({ message: error.message });
+                if (error.message.includes('Permissão negada')) return res.status(403).json({ message: error.message });
+                if (error.message.includes('Não é possível alterar')) return res.status(400).json({ message: error.message });
+            }
+            return res.status(500).json({ message: 'Erro interno ao atualizar status do pedido.' });
         }
     }
 }
