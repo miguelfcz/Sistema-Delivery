@@ -1,6 +1,6 @@
-# Sistema de Delivery - Backend
+# Cardapio Digital - Backend
 
-Este é o backend do projeto de sistema de delivery, desenvolvido em Node.js, TypeScript, Express, Prisma e PostgreSQL. A aplicação é totalmente containerizada com Docker para facilitar a configuração e a execução do ambiente de desenvolvimento.
+Este é o backend do projeto de u cardapio digital, desenvolvido em Node.js, TypeScript, Express, Prisma e PostgreSQL. A aplicação é totalmente containerizada com Docker para facilitar a configuração e a execução do ambiente de desenvolvimento.
 
 ## Funcionalidades
 
