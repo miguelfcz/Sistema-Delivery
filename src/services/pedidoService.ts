@@ -10,13 +10,14 @@ interface PedidoCreateInput {
     usuarioId: number;
     estabelecimentoId: number;
     itens: ItemInput[];
+    mesa: string;
 }
 
 export class PedidoService {
 
     async createPedido(data: PedidoCreateInput): Promise<Pedido> {
         
-        const { usuarioId, estabelecimentoId, itens } = data;
+        const { usuarioId, estabelecimentoId, itens, mesa } = data;
         
         const novoPedido = await prisma.$transaction(async (tx) => {
             let totalGeral = 0;
@@ -46,6 +47,7 @@ export class PedidoService {
                 data: {
                     usuarioId: usuarioId,
                     estabelecimentoId: estabelecimentoId,
+                    mesa: mesa,
                     total: totalGeral,
                     status: StatusPedido.PENDENTE,
                 }
@@ -105,6 +107,67 @@ export class PedidoService {
         return prisma.pedido.update({
             where: { id: pedidoId },
             data: { status: StatusPedido.CANCELADO },
+        });
+    }
+
+    async findPedidoByEstabelecimento(estabelecimentoId: number, usuarioDonoId: number): Promise<Pedido[]> {
+        const estabelecimento = await prisma.estabelecimento.findUnique({
+            where: { id: estabelecimentoId},
+            select: { usuarioId: true}
+        });
+
+        if (!estabelecimento) {
+            throw new Error('Estabelecimento não encontrado.');
+        }
+
+        if (estabelecimento.usuarioId !== usuarioDonoId) {
+            throw new Error('Permissão negada. Você só pode acessar pedidos do seu prórpio estabelecimento.');
+        }
+
+        return prisma.pedido.findMany({
+            where: { estabelecimentoId},
+            include: {
+                usuario: {
+                    select: { nome: true}
+                },
+                itens: {
+                    include: {
+                        produto: {
+                            select: { nome: true}
+                        }
+                    }
+                }
+            },
+            orderBy: { createdAt: 'desc' }
+        });
+    }
+
+    async updateStatusPedido(pedidoId: number, novoStatus: StatusPedido, usuarioDonoId: number): Promise<Pedido> {
+        const pedido = await prisma.pedido.findUnique({
+            where: { id: pedidoId },
+            select: {
+                status: true,
+                estabelecimento: {
+                    select: { usuarioId: true }
+                }
+            }
+        });
+
+        if (!pedido) {
+            throw new Error('Pedido não encontrado.');
+        }
+
+        if (pedido.estabelecimento.usuarioId !== usuarioDonoId) {
+            throw new Error('Permissão negada. Você só pode atualizar pedidos do seu próprio estabelecimento.');
+        }
+
+        if (pedido.status === StatusPedido.CANCELADO || pedido.status === StatusPedido.CONCLUIDO) {
+            throw new Error('Não é possível atualizar o status de um pedido que foi cancelado ou concluído.');
+        }
+
+        return prisma.pedido.update({
+            where: {id: pedidoId },
+            data: { status: novoStatus },
         });
     }
 }

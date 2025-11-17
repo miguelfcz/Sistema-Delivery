@@ -3,11 +3,11 @@ version: "3.9"
 services:
   db:
     image: postgres:17
-    container_name: postgres-delivery
+    container_name: postgres-cardapio
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: deliverydb123
-      POSTGRES_DB: deliverydb
+      POSTGRES_DB: cardapiodb
     ports:
       - "5432:5432"
     volumes:
@@ -15,13 +15,13 @@ services:
 
   app:
     build: .
-    container_name: node-delivery
+    container_name: node-cardapio
     ports:
       - "3000:3000"
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://postgres:deliverydb123@db:5432/deliverydb?schema=public
+      DATABASE_URL: postgresql://postgres:cardapiodb123@db:5432/cardapiodb?schema=public
     volumes:
       - .:/app
       - /app/node_modules
