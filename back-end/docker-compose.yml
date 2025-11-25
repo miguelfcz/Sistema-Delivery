@@ -21,7 +21,8 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://postgres:cardapiodb123@db:5432/cardapiodb?schema=public
+      DATABASE_URL: postgresql://postgres:deliverydb123@db:5432/cardapiodb?schema=public
+      JWT_SECRET: "um_segredo_muito_forte_e_dificil_de_descobrir_123456"
     volumes:
       - .:/app
       - /app/node_modules

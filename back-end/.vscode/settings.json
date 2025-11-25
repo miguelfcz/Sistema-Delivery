@@ -10,6 +10,17 @@
             "database": "deliverydb",
             "username": "postgres",
             "password": "deliverydb123"
+        },
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "password": "deliverydb123",
+            "database": "cardapiodb",
+            "username": "postgres",
+            "name": "db"
         }
     ]
 }

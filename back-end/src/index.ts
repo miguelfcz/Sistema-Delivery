@@ -1,6 +1,5 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
+import 'dotenv/config'; 
+import cors from 'cors';
 import express from 'express';
 
 import userRoute from './routes/userRoute';
@@ -13,6 +12,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
+
+//Aceitará requisições de qualquer origem
+app.use(cors());
 
 app.use('/api/usuarios', userRoute);
 app.use('/api/auth', authRoute);
