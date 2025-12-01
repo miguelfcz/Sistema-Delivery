@@ -1,18 +1,23 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/auth/Login';
+import Login from './pages/login/login';
+import Cadastro from './pages/cadastro/cadastro';
 import { AuthProvider } from './context/authContext';
 import { PrivateRoute } from './router/privateRoute';
+import Apresentation from './pages/apresentation/apresentation';
+import Dashboard from './pages/dashboard/dashboard';
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/login" element={<Login />} />
-
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/home" element={<Apresentation />} />
+          <Route path="/dashboardt" element={<Dashboard />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<h1>Bem-vindo ao Dashboard! (Em construção)</h1>} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

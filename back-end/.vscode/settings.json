@@ -6,8 +6,8 @@
             "server": "localhost",
             "port": 5432,
             "driver": "PostgreSQL",
-            "name": "delivery db",
-            "database": "deliverydb",
+            "name": "postgres-cardapio",
+            "database": "cardapiodb",
             "username": "postgres",
             "password": "deliverydb123"
         }
