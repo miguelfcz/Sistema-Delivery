@@ -11,6 +11,13 @@ export interface PedidoInput {
     endereco: string;
 }
 
+export interface Pedido {
+    id: number;
+    total: number;
+    endereco: string;
+    status: 'PENDENTE' | 'EM_PREPARO' | 'CONCLUIDO' | 'CANCELADO';
+}
+
 export const  pedidoService = { //criando pedido
     criar: async (dados: PedidoInput) => {
         const response = await api.post('/pedidos', dados);
@@ -23,12 +30,12 @@ export const  pedidoService = { //criando pedido
     },
 
     listarPorEstabelecimento: async (idEstabelecimento: number) => {
-        const response = await api.get('/pedidos/estalecimento?id=${idEstabelecimento}');
+        const response = await api.get(`/pedidos/estalecimento?id=${idEstabelecimento}`);
         return response.data;
     },
 
     atualizarStatus: async (idPedido: number, status: string) => {
-        const response = await api.put('/pedidos/${idPedido}/status', {status});
+        const response = await api.put(`/pedidos/${idPedido}/status`, {status});
         return response.data;
     }
 }
