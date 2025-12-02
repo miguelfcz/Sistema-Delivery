@@ -10,14 +10,14 @@ interface PedidoCreateInput {
     usuarioId: number;
     estabelecimentoId: number;
     itens: ItemInput[];
-    mesa: string;
+    endereco: string;
 }
 
 export class PedidoService {
 
     async createPedido(data: PedidoCreateInput): Promise<Pedido> {
         
-        const { usuarioId, estabelecimentoId, itens, mesa } = data;
+        const { usuarioId, estabelecimentoId, itens, endereco } = data;
         
         const novoPedido = await prisma.$transaction(async (tx) => {
             let totalGeral = 0;
@@ -47,7 +47,7 @@ export class PedidoService {
                 data: {
                     usuarioId: usuarioId,
                     estabelecimentoId: estabelecimentoId,
-                    mesa: mesa,
+                    endereco: endereco,
                     total: totalGeral,
                     status: StatusPedido.PENDENTE,
                 }

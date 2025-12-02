@@ -132,6 +132,9 @@ exports.Prisma.UsuarioScalarFieldEnum = {
 exports.Prisma.EstabelecimentoScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
+  descricao: 'descricao',
+  cnpj: 'cnpj',
+  capaUrl: 'capaUrl',
   endereco: 'endereco',
   ativo: 'ativo',
   createdAt: 'createdAt',
@@ -144,6 +147,7 @@ exports.Prisma.ProdutoScalarFieldEnum = {
   nome: 'nome',
   descricao: 'descricao',
   preco: 'preco',
+  imagemUrl: 'imagemUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   estabelecimentoId: 'estabelecimentoId'
@@ -152,7 +156,7 @@ exports.Prisma.ProdutoScalarFieldEnum = {
 exports.Prisma.PedidoScalarFieldEnum = {
   id: 'id',
   total: 'total',
-  mesa: 'mesa',
+  endereco: 'endereco',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
