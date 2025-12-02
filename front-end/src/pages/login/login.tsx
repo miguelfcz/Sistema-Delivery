@@ -9,7 +9,7 @@ import {
     Alert,
     Link 
 } from '@mui/material';
-import {useNavigate, Link as RouterLink} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import { authService } from '../../services/authService';
 import { useAuth } from '../../hooks/useAuth';
 import chefbackground from '../../assets/images/chefbackground2.png';
@@ -210,8 +210,8 @@ const Login = () => {
                                     backgroundColor: 'primary.dark',
                                 },
                                 '&.Mui-disabled': {
-                                    backgroundColor: '#cccccc', // Cinza Claro (ex: #cccccc)
-                                    color: '#888888',           // Cor do texto desabilitado (opcional)
+                                    backgroundColor: '#cccccc', 
+                                    color: '#888888',
                                 }
                             }}
                         >   
@@ -221,7 +221,7 @@ const Login = () => {
                     
                     <Typography variant="body1" sx={{ mt: 2 , color: 'white' }}>
                         Ainda não tem uma conta? 
-                        <Link href="/cadastro" variant="body1" sx={{ ml: 0.5, fontWeight: 'bold' }}>
+                        <Link href="/cadastro-usuario" variant="body1" sx={{ ml: 0.5, fontWeight: 'bold' }}>
                             Cadastre-se
                         </Link>
                     </Typography>

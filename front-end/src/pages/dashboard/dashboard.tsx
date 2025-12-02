@@ -1,4 +1,4 @@
-import { Box, Typography, Container, Paper, Grid, styled } from '@mui/material';
+import { Box, Typography, Paper} from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate, Link as MuiRouterLink } from 'react-router-dom'; // 🚨 Renomeei 'RouterLink' para 'MuiRouterLink' para evitar confusão de nomes
 // 🚨 Importando o componente Carousel
@@ -8,7 +8,6 @@ import Navbar from '../../components/layout/navbar/navbar';
 
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Link } from 'react-router-dom'; // 🚨 ESTA LINHA FOI REMOVIDA PARA EVITAR O CONFLITO. USAMOS AGORA O 'MuiRouterLink'
 import Footer from '../../components/layout/footer/footer';
 // ----------------------------------------------------------------------
 // 1. DEFINIÇÃO DO COMPONENTE RatingStars (Avaliação)
@@ -126,14 +125,14 @@ const Dashboardt = () => {
                       height: 'auto', 
                       borderRadius: 1,
                       overflow: 'hidden',
-                      cursor: 'pointer', // 🚨 Adicionado cursor pointer para indicar clicável
+                      cursor: 'pointer', 
                       transition: 'transform 0.2s',
                       '&:hover': {
-                        transform: 'translateY(-3px)', // 🚨 Efeito visual ao passar o mouse
+                        transform: 'translateY(-3px)', 
                       }
                     }}
                   >
-                    {/* 🚨 ENVOLVENDO O CONTEÚDO DO CARD COM LINK */}
+                    {/* Tornando clicavel os cards */}
                     <MuiRouterLink to={`/restaurante/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                       <Box sx={{ position: 'relative' }}>
 
@@ -149,7 +148,7 @@ const Dashboardt = () => {
                         <Box sx={{ p: 1.5 }}>
                           <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
 
-                            {/* Logo (Posicionado sobre a imagem - ajuste necessário se usar position absolute) */}
+                            {/* Logo */}
                             {product.logo && (
                               <Box
                                 component="img"
@@ -166,7 +165,7 @@ const Dashboardt = () => {
                               />
                             )}
 
-                            {/* Nome do Produto/Restaurante */}
+                            {/* Nome do Restaurante */}
                             <Typography variant="subtitle1" fontWeight="600" sx={{ ml: product.logo ? 4.5 : 0 }}>
                               {product.name}
                             </Typography>
@@ -181,26 +180,26 @@ const Dashboardt = () => {
                           </Box>
                         </Box>
                       </Box>
-                    </MuiRouterLink> {/* 🚨 FIM DO LINK DO CARD */}
+                    </MuiRouterLink> {/* Fim do clicável*/}
                   </Paper>
                 </Box>
               ))}
             </Carousel>
-          </Box> {/* FIM DO CARROSSEL DE CARDS */}
+          </Box> {/* Fim do carrosel */}
 
 
-          {/* Linha Separadora após Seção 1 */}
+          {/* Linha Separadora  */}
           <Box sx={{ my: 4, borderBottom: '1px solid #cfcfcfff' }} />
 
-          {/* Título da Seção 2 */}
+          {/* Título */}
           <Typography variant="h5" component="h2" fontWeight="bold" sx={{ mb: 2 }}>
             Veja mais
           </Typography>
 
-          {/* ======================= 2. LISTA VERTICAL (listProducts) ======================= */}
+          {/* 2. Lista Vertical (listProducts) */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
             {listProducts.map((item, index) => (
-              // 🚨 ITEM DA LISTA TAMBÉM É CLICÁVEL
+              
               <MuiRouterLink 
                 key={index} 
                 to={`/restaurante/${item.id}`} 
@@ -211,10 +210,10 @@ const Dashboardt = () => {
                     display: 'flex',
                     alignItems: 'center',
                     pb: 1,
-                    cursor: 'pointer', // 🚨 Adicionado cursor pointer
+                    cursor: 'pointer', 
                     transition: 'opacity 0.2s',
                     '&:hover': {
-                      opacity: 0.8, // 🚨 Efeito visual ao passar o mouse
+                      opacity: 0.8, 
                     },
                     borderBottom: index < listProducts.length - 1 ? '1px solid #cfcfcfff' : 'none'
                   }}
@@ -239,7 +238,7 @@ const Dashboardt = () => {
                 </Box>
               </MuiRouterLink>
             ))}
-          </Box> {/* FIM DA LISTA VERTICAL (listProducts) */}
+          </Box> {/* Fim da lista vertical (listProducts) */}
 
         </Paper>
       </Box>

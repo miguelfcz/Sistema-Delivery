@@ -115,8 +115,13 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       {/* 2. Exibe o nome do usuário se ele estiver logado */}
-      <MenuItem onClick={handleMenuClose}>Olá, {user?.nome}</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Minha Conta</MenuItem>
+      {user && <MenuItem disabled>Olá, {user.nome}</MenuItem>}
+
+      {/* 3. Renderiza o item "Meu Restaurante" apenas se o usuário tiver um restaurante associado */}
+      {user?.restauranteId && (
+        <MenuItem onClick={handleMenuClose}>Meu Restaurante</MenuItem>
+      )}
+      
       <MenuItem onClick={handleLogout}>Sair</MenuItem>
     </Menu>
   );
@@ -175,7 +180,7 @@ export default function PrimarySearchAppBar() {
                 alignItems: 'center', 
                 width: '100%',
                 mt: 'auto',
-                pb: '40px',
+                pb: '40px', 
                 position: 'relative', // 🚨 CHAVE: Necessário para os filhos absolutos
               }}>
                 

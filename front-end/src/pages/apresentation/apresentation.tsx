@@ -3,11 +3,9 @@ import {
     Box, 
     Typography, 
     Link,
-    Container // Importação necessária para o Container, caso queira usá-lo depois
 } from '@mui/material';
 
 import {useNavigate, Link as RouterLink} from 'react-router-dom';
-import { cadastroService } from '../../services/authService';
 import { useAuth } from '../../hooks/useAuth';
 import background from '../../assets/images/background.jpg';
 import icon from '../../assets/images/orange-icon.png';
@@ -16,39 +14,17 @@ import Footer from '../../components/layout/footer/footer';
 
 
 const Apresentation = () => {
-    const { signIn, signed } = useAuth(); // 1. Pega o estado 'signed' do contexto
+    const { signIn, signed } = useAuth();
     const navigate = useNavigate();
 
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const [erro, setErro] = useState('');
-    const [loading, setLoading] = useState(false);
 
-    const handleCadastro = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setErro('');
-        setLoading(true);
     
-        try {
-            const data = await cadastroService.cadastro(nome, email, senha);
-            
-            signIn(data.token);
-            navigate('/dashboard'); 
-    
-        } catch (error: any) {
-            const msg = error.response?.data?.message || 'Não foi possível cadastrar. Verifique seus dados.';
-            setErro(msg);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     return (
-        // 1. Box Externo (Estrutura principal: Coluna)
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         
-            {/* 2. Box de Conteúdo (Background e Layout principal: Flex para Texto/Form) */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            
             <Box
                 // Background estilização geral
                 sx={{
@@ -58,29 +34,28 @@ const Apresentation = () => {
                     backgroundSize: 'cover',
                     backgroundPosition: 'right',
 
-                    // Flexbox de coluna para organizar Header e Conteúdo Verticalmente
                     display: 'flex', 
                     flexDirection: 'column',
-                    position: 'relative', // Mantido para o tema
+                    position: 'relative', 
                 }}
-            >  
+            >
 
-                {/* 🚨 NOVO: BOX DE HEADER FLEXÍVEL 🚨 */}
+                {/*  */}
                 <Box
                     sx={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        p: 3, // Padding geral
+                        p: 3, 
                         width: '100%',
                     }}
                 >
-                    {/* Ícone do site (mantido absoluto para não atrapalhar o layout) */}
+                    {/* Ícone do site */}
                     <Link 
                         component={RouterLink}
                         to="/" 
                         style={{ textDecoration: 'none' }} 
-                        sx={{ zIndex: 100, ml: { sm: 1, md: 3 } }} // Ajuste de margem esquerda
+                        sx={{ zIndex: 100, ml: { sm: 1, md: 3 } }} 
                     >
                         <Box
                             component="img"
@@ -105,8 +80,9 @@ const Apresentation = () => {
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: { xs: 1, sm: 2, md: 4 },
-                            mr: { sm: 1, md: 2 }
+
+                            gap: { md: 4 },
+                            mr: { md: 2 }
                         }}
                     >
                         {/* Cadastre sua empresa */}
@@ -154,7 +130,7 @@ const Apresentation = () => {
                         </Link>
 
                         {/* Login */}
-                        {/* 2. Renderiza o botão de Login apenas se o usuário NÃO estiver logado */}
+                        {/* Renderiza o botão de Login apenas se o usuário não estiver logado */}
                         {!signed && (
                             <Link 
                                 component={RouterLink}
@@ -172,14 +148,15 @@ const Apresentation = () => {
                                         transition: 'all 0.1s',
                                         color: 'primary.main',
                                     }
-                                }}
-                            >
+                                }} >
+
                                 Login
+
                             </Link>
                         )}
                     </Box>
 
-                    {/* Thema do site (Mantido fora do fluxo de links mas posicionado pelo Flexbox) */}
+                    {/* Tema do site  */}
                     <Box
                         component="img"
                         src={thema}
@@ -195,12 +172,10 @@ const Apresentation = () => {
                                 transform: 'scale(1.04)',
                                 transition: 'all 0.1s',
                             },
-                            // 🚨 Margem direita para afastar da borda
-                            mr: { xs: 1, md: 3 } 
-                        }}
-                    />
+                            mr: { md: 3 } 
+                        }} />
+
                 </Box>
-                {/* Fim do Box de Header */}
 
 
                 {/* CONTEÚDO PRINCIPAL (Texto) */}
@@ -209,8 +184,7 @@ const Apresentation = () => {
                         flexGrow: 1,
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'center', // Centraliza o texto verticalmente
-                        // 🚨 Ajuste a margem/padding aqui para controlar o recuo
+                        justifyContent: 'center', 
                         paddingLeft: { xs: '5%', md: '8%' }, 
                         paddingBottom: '10%',
                     }}
@@ -224,9 +198,10 @@ const Apresentation = () => {
                             lineHeight: 1.1,
                             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)',
                             maxWidth: { xs: '90%', md: '500px' } // Limita a largura do texto
-                        }}
-                    >
+                        }}>
+
                         TRANSFORME SEU NEGÓCIO COM
+
                         <Typography variant="h3" component="span" 
                             sx={{ color: 'primary.main', 
                             fontWeight:'bold',
@@ -235,7 +210,8 @@ const Apresentation = () => {
                             paddingLeft: '6px', 
                             }}
                         >CARDAPIU</Typography>
-                    </Typography>   
+                    </Typography>
+
                     <Typography
                         variant="h6"
                         sx={{
@@ -253,8 +229,10 @@ const Apresentation = () => {
                 
             </Box>
             
-            <Footer/>
         </Box>
+        <Footer/>
+        </Box>
+        
     );
 };
 
