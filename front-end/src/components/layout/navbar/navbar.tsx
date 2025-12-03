@@ -19,7 +19,7 @@ import {useNavigate, Link as RouterLink} from 'react-router-dom';
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import icon from '../../../assets/images/white-icon.png';
-
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAuth } from '../../../hooks/useAuth';
 
 
@@ -69,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const { user, username, signOut } = useAuth(); // 1. Acessa o contexto de autenticação e a função signOut
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -133,11 +134,11 @@ export default function PrimarySearchAppBar() {
       }}
       open={isNotificationOpen}
       onClose={() => setAnchorNotification(null)}
-      sx={{ zIndex: 2000 }}   // <----- ADICIONE ISSO
+      sx={{ zIndex: 2000 }}  
     >
       <MenuItem onClick={() => { 
         setAnchorNotification(null);
-        navigate('/pedidos');
+        navigate('/comanda');
       }}>
         Pedidos
       </MenuItem>
@@ -277,9 +278,17 @@ export default function PrimarySearchAppBar() {
                     alignItems: 'center',
                 }}
             >
+
+              <Box sx={{ mt: 1 }}>
+                <ShoppingCartIcon 
+                    sx={{cursor: "pointer", color: '#ffffffff', fontSize: '2.0rem', mr: 3}}
+                    onClick={() => navigate('/finalizar-pedido')}
+                />
+              </Box>
+
               {/* Ícone de Notificação */}
               <Box >
-                <IconButton // 🚨 CORREÇÃO: Envolvido o ícone em IconButton
+                <IconButton 
                     onClick={handleNotification}
                     aria-controls="notification-menu"
                     aria-haspopup="true"

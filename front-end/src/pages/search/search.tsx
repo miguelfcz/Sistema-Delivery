@@ -30,6 +30,7 @@ const listProducts = [
 const Search = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q') || '';
+    const [produtos, setProdutos] = useState<Produto[]>([]);
 
     // Filtra os produtos que correspondem à busca (ignorando maiúsculas/minúsculas)
     const matchedProducts = listProducts.filter(product =>

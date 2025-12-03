@@ -10,7 +10,7 @@ import CadastroRestaurante from './pages/cadastroRestaurante/cadastroRestaurante
 import Search from './pages/search/search';
 import AdicionarItem from './pages/AdicionarItemCardapio/AdicionarItemCardapio';
 import Finalizar_pedido from './pages/carrinho_finalizar/finalizar_compra';
-
+import Comanda from './pages/comanda/comanda';
 
 
 function App() {
@@ -33,6 +33,7 @@ function App() {
             <Route path="/restaurante/:id" element={<Restaurante />} />  
             <Route path="/restaurante/:id/adicionar-item" element={<AdicionarItem />} />
             <Route path="/finalizar-pedido" element={<Finalizar_pedido />} />
+            <Route path="/comanda" element={<Comanda />} />
           </Route>
 
         </Routes>

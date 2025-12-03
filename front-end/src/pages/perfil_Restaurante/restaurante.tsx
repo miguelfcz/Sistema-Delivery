@@ -148,7 +148,7 @@ const Restaurante = () => {
                         </Alert>
                     )}
 
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%', maxWidth: 850 }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '120%', maxWidth: 850 }}>
                         {produtos.map((item) => (
                             <Box
                                 key={item.id}
