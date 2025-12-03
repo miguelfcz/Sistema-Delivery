@@ -68,13 +68,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const { user, username, signOut } = useAuth(); // 1. Acessa o contexto de autenticação e a função signOut
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
-  const [searchValue, setSearchValue] = React.useState('');
-  const navigate = useNavigate();
-  const [anchorNotification, setAnchorNotification] = React.useState<null | HTMLElement>(null);
+  const { user, username, signOut } = useAuth(); // 1. Acessa o contexto de autenticação e a função signOut
+  
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null);
+  const [searchValue, setSearchValue] = React.useState('');
+  const navigate = useNavigate();
+  const [anchorNotification, setAnchorNotification] = React.useState<null | HTMLElement>(null);
 
   const isNotificationOpen = Boolean(anchorNotification);
   const isMenuOpen = Boolean(anchorEl);
@@ -112,37 +113,37 @@ export default function PrimarySearchAppBar() {
     // O ideal é redirecionar o usuário para a página de login ou inicial
   };
 
-  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && searchValue.trim()) {
-      // Navega para a página de busca com o valor como query param
-      navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
-    }
-  };
-  const renderNotificationMenu = (
-    <Menu
-      anchorEl={anchorNotification}
-      anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'right',
-      }}
-      id="notification-menu"
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isNotificationOpen}
-      onClose={() => setAnchorNotification(null)}
-      sx={{ zIndex: 2000 }}  
-    >
-      <MenuItem onClick={() => { 
-        setAnchorNotification(null);
-        navigate('/comanda');
-      }}>
-        Pedidos
-      </MenuItem>
-    </Menu>
-  );
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && searchValue.trim()) {
+      // Navega para a página de busca com o valor como query param
+      navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+    }
+  };
+  const renderNotificationMenu = (
+    <Menu
+      anchorEl={anchorNotification}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      id="notification-menu"
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isNotificationOpen}
+      onClose={() => setAnchorNotification(null)}
+      sx={{ zIndex: 2000 }}  
+    >
+      <MenuItem onClick={() => { 
+        setAnchorNotification(null);
+        navigate('/comanda');
+      }}>
+        Pedidos
+      </MenuItem>
+    </Menu>
+  );
 
 
 
@@ -269,14 +270,14 @@ export default function PrimarySearchAppBar() {
                 />
             </Search>
 
-            {/* ICONES DE PERFIL E NOTIFICAÇÃO */}
-            <Box 
-                sx={{
-                    zIndex: 100, mr: { sm: 3, md: 4 },
-                    display: 'flex', // Permite que os ícones fiquem lado a lado
-                    alignItems: 'center',
-                }}
-            >
+            {/* ICONES DE PERFIL E NOTIFICAÇÃO */}
+            <Box 
+                sx={{
+                    zIndex: 100, mr: { sm: 3, md: 4 },
+                    display: 'flex', // Permite que os ícones fiquem lado a lado
+                    alignItems: 'center',
+                }}
+            >
 
               <Box sx={{ mt: 1 }}>
                 <ShoppingCartIcon 
@@ -285,9 +286,9 @@ export default function PrimarySearchAppBar() {
                 />
               </Box>
 
-              {/* Ícone de Notificação */}
-              <Box >
-                <IconButton 
+              {/* Ícone de Notificação */}
+              <Box >
+                <IconButton 
                     onClick={handleNotification}
                     aria-controls="notification-menu"
                     aria-haspopup="true"

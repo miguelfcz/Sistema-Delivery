@@ -110,11 +110,18 @@ const Restaurante = () => {
 
                 <Box sx={{ my: 6, borderBottom: '1px solid #ddd', maxWidth: 1050, margin: '0 auto'}} />
                 
-                <Paper elevation={0} sx={{ maxWidth: 900, margin: '0 auto', mb: 4, p: 2 }}>
-                    <Typography variant="h5" fontWeight="bold" sx={{ mb: 4, textAlign: 'center' }}>Menu</Typography>
-                    {produtos.length === 0 && <Typography align="center">Nenhum prato cadastrado.</Typography>}
-                    
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Paper elevation={0} sx={{ display:'flex', flexDirection: 'column', alignItems: 'center', maxWidth: 900, margin: '0 auto', mt: 4, mb: 4, backgroundColor: 'transparent' }}>
+                    <Typography variant="h5" component="h2" fontWeight="bold" sx={{ mb: 4 }}>
+                        Menu
+                    </Typography>
+
+                    {produtos.length === 0 && (
+                        <Alert severity="info" sx={{ width: '100%', maxWidth: 600 }}>
+                            Este restaurante ainda não cadastrou nenhum prato.
+                        </Alert>
+                    )}
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '120%', maxWidth: 850 }}>
                         {produtos.map((item) => (
                             <Box 
                                 key={item.id} 
