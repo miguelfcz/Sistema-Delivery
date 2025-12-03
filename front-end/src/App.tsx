@@ -20,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro-usuario" element={<Cadastro />} />
           <Route path="/home" element={<Apresentation />} />
+          <Route path="/restaurante/:id" element={<Restaurante />} />
 
           <Route element={<PrivateRoute />}>
             <Route path="/restaurante" element={<Restaurante />} />
@@ -27,7 +28,7 @@ function App() {
             <Route path="/search" element={<Search />} />"
             <Route path="/adicionar-item" element={<AdicionarItem />} />
             <Route path="/dashboard" element={<Dashboard />} />   
-            <Route path="restaurante/:id" element={<Restaurante />} />
+            <Route path="/restaurante/:id/novo-produto" element={<Restaurante />} />
             <Route path="/adicionar-item-cardapio" element={<AdicionarItem />} />
           </Route>
 
