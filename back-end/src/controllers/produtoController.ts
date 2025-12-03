@@ -9,7 +9,7 @@ interface AuthRequest extends Request {
 export class ProdutoController {
 
     async create(req: AuthRequest, res: Response): Promise<Response> {
-        const { nome, descricao, preco, estabelecimentoId } = req.body;
+        const { nome, descricao, preco, estabelecimentoId, imagemUrl } = req.body;
 
         if (!req.user) {
             return res.status(401).json({ message: 'Acesso não autorizado.' });
@@ -21,7 +21,7 @@ export class ProdutoController {
                 return res.status(400).json({ message: 'Nome, preço e estabelecimentoId são obrigatórios.' });
             }
 
-            const novoProduto = await produtoService.createProduto({ nome, descricao, preco, estabelecimentoId }, usuarioDonoId);
+            const novoProduto = await produtoService.createProduto({ nome, descricao, preco, estabelecimentoId, imagemUrl }, usuarioDonoId);
             return res.status(201).json(novoProduto);
 
         } catch (error) {

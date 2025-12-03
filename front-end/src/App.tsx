@@ -26,7 +26,8 @@ function App() {
             <Route path="/cadastro-restaurante" element={<CadastroRestaurante />} />
             <Route path="/search" element={<Search />} />"
             <Route path="/adicionar-item" element={<AdicionarItem />} />
-            <Route path="/dashboard" element={<Dashboard />} />   
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="restaurante/:id" element={<Restaurante />} />
           </Route>
 
         </Routes>

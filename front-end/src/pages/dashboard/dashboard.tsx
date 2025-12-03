@@ -71,6 +71,12 @@ const Dashboard = () => {
   const destaques = restaurantes.slice(0, 7);
   const maisRestaurantes = restaurantes.slice(7);
 
+  const getImageUrl = (url: string | undefined | null) => {
+    if (!url) return null;
+
+    return url.startsWith('http') ? url : `http://localhost:3000${url}`;
+  };
+
   return (
     <Box>
       <Navbar />
@@ -106,7 +112,7 @@ const Dashboard = () => {
                   nome={restaurante.nome}
                   endereco={restaurante.endereco}
                   descricao={restaurante.descricao}
-                  capaUrl={restaurante.capaUrl}
+                  capaUrl={getImageUrl(restaurante.capaUrl)}
                   onCardClick={(id) => navigate(`/restaurante/${id}`)}
                 />
               ))}
@@ -149,7 +155,7 @@ const Dashboard = () => {
                   {/* Imagem do Item da Lista */}
                   <Box
                     component="img"
-                    src={item.capaUrl || 'https://placehold.co/80x80/eeeeee/cccccc?text=Sem+Foto'}
+                    src={getImageUrl(item.capaUrl) || 'https://placehold.co/80x80/eeeeee/cccccc?text=Sem+Foto'}
                     alt={item.nome}
                     sx={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 1, mr: 2 }}
                   />
