@@ -7,6 +7,8 @@ import Apresentation from './pages/apresentation/apresentation';
 import Dashboard from './pages/dashboard/dashboard';
 import Restaurante from './pages/perfil_Restaurante/restaurante';
 import CadastroRestaurante from './pages/cadastroRestaurante/cadastroRestaurante';
+import Search from './pages/search/search';
+import AdicionarItem from './pages/AdicionarItemCardapio/AdicionarItemCardapio';
 
 
 function App() {
@@ -18,13 +20,15 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro-usuario" element={<Cadastro />} />
           <Route path="/home" element={<Apresentation />} />
-          <Route path="/dashboardt" element={<Dashboard />} />
-          <Route path="/restaurante" element={<Restaurante/>} />
-          <Route path="/cadastro-restaurante" element={<CadastroRestaurante/>} />
 
           <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} /> 
+            <Route path="/restaurante" element={<Restaurante />} />
+            <Route path="/cadastro-restaurante" element={<CadastroRestaurante />} />
+            <Route path="/search" element={<Search />} />"
+            <Route path="/adicionar-item" element={<AdicionarItem />} />
+            <Route path="/dashboard" element={<Dashboard />} />   
           </Route>
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -14,17 +14,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useAuth } from '../../hooks/useAuth';
 import Navbar from '../../components/layout/navbar/navbar';
 import Footer from '../../components/layout/footer/footer';
-import { estabelecimentoService } from '../../services/estabelecimentoService';
+
+import api from '../../services/api'; // Correção: Importação padrão, sem chaves
 
 
 
-const CadastroRestaurante = () => {
+const AdicionarItemCardapio = () => {
     const { user } = useAuth(); // Pega o usuário logado 
     const navigate = useNavigate();
-
     const [nome, setNome] = useState('');
-    const [endereco, setEndereco] = useState('');
-    const [cnpj, setCnpj] = useState('');
+    const [valor, setValor] = useState('');
     const [descricao, setDescricao] = useState('');
     const [erro, setErro] = useState('');
     const [loading, setLoading] = useState(false);
@@ -61,44 +60,49 @@ const CadastroRestaurante = () => {
         e.preventDefault();
         setErro('');
 
-        if (!nome || !endereco || !cnpj || !descricao) {
+        if (!nome || !valor || !descricao || !profileImageFile) {
             setErro('Todos os campos são obrigatórios.');
+            return;
+        }
+
+        if (!user?.restauranteId) {
+            setErro('Você precisa estar associado a um restaurante para cadastrar um item.');
             return;
         }
 
         setLoading(true);
 
+        // 1. Cria um objeto FormData para enviar arquivos e texto
+        const formData = new FormData();
+        formData.append('nome', nome);
+        formData.append('descricao', descricao);
+        // Converte o valor para número e formato adequado se necessário
+        formData.append('preco', valor.replace(',', '.')); 
+        formData.append('estabelecimentoId', user.restauranteId);
+        formData.append('file', profileImageFile); // 'file' é um nome comum para o campo de imagem
+
         try {
-            let capaUrl = '';
-
-            // 1. LÓGICA REAL: UPLOAD DA FOTO
-            if (profileImageFile) {
-                // Envia a foto pro back-end e recebe o link
-                capaUrl = await estabelecimentoService.uploadImagem(profileImageFile);
-            }
-
-            // 2. LÓGICA REAL: SALVAR NO BANCO
-            await estabelecimentoService.criar({
-                nome,
-                endereco,
-                cnpj,
-                descricao,
-                capaUrl // Manda a URL que o back devolveu
+            // 2. Envia a requisição para o backend
+            // A URL '/produtos' é um exemplo, ajuste para a sua rota de criação de produto
+            await api.post('/produtos', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
-            
-            alert('Restaurante cadastrado com sucesso!');
-            
-            // 3. REDIRECIONAMENTO CORRETO: Vai pro Dashboard do Dono
-            navigate('/dashboard'); 
+
+            alert('Item cadastrado com sucesso!');
+
+            // Redireciona para o perfil do restaurante
+            navigate(`/restaurante/${user.restauranteId}`); 
 
         } catch (error: any) {
-            console.error(error);
-            const msg = error.response?.data?.message || 'Não foi possível cadastrar o restaurante.';
+            const msg = error.response?.data?.message || 'Não foi possível adicionar o Item.';
             setErro(msg);
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
@@ -111,7 +115,10 @@ const CadastroRestaurante = () => {
                         display: 'flex', 
                         flexDirection: 'column', 
                         alignItems: 'center',
-                        mb:'12rem'
+                        mb:'12rem',
+                        maxWidth: 650,
+                        maxHeight: 800,
+                        margin: '0 auto',
                     }}
                 >
                     <Typography 
@@ -120,11 +127,13 @@ const CadastroRestaurante = () => {
                         fontWeight="bold" 
                         sx={{ mb: 3, color: 'primary.main' }}
                     >
-                        Cadastrar Novo Restaurante
+                        Adicionar novo Item ao Cardápio
                     </Typography>
 
-                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%' }}>
-                        
+                    
+
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1, width: '100%'}}>
+
                         {/* --- CAMPO DE UPLOAD DE FOTO --- */}
                         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
                             <Box
@@ -183,52 +192,53 @@ const CadastroRestaurante = () => {
                             </Box>
                         </Box>
                         <Typography variant="caption" display="block" textAlign="center" color="text.secondary" sx={{ mb: 2 }}>
-                            Clique no ícone para adicionar a foto do restaurante
+                            Clique no ícone para adicionar a foto do Item
                         </Typography>
-                        {/* --- FIM DO CAMPO DE UPLOAD --- */}
 
+                        
 
+                    <Box sx={{ }}>            
                         <TextField
                             margin="normal"
                             required
                             fullWidth
                             id="nome"
-                            label="Nome do Restaurante"
+                            label="Nome"
                             name="nome"
                             autoFocus
                             value={nome}
+                            InputLabelProps={{
+                                required: false, 
+                            }}
                             onChange={(e) => setNome(e.target.value)}
                         />
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            id="endereco"
-                            label="Endereço"
-                            name="endereco"
-                            value={endereco}
-                            onChange={(e) => setEndereco(e.target.value)}
+                            id="valor"
+                            label="Valor do Item"
+                            name="valor"
+                            value={valor}
+                            InputLabelProps={{
+                                required: false, 
+                            }}
+                            onChange={(e) => setValor(e.target.value)}
                         />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="cnpj"
-                            label="CNPJ"
-                            name="cnpj"
-                            value={cnpj}
-                            onChange={(e) => setCnpj(e.target.value)}
-                        />
+
                         <TextField
                             margin="normal"
                             required
                             fullWidth
                             id="descricao"
-                            label="Descrição do Restaurante"
+                            label="Descrição do Item"
                             name="descricao"
                             multiline
                             rows={4}
                             value={descricao}
+                            InputLabelProps={{
+                                required: false, 
+                            }}
                             onChange={(e) => setDescricao(e.target.value)}
                         />
 
@@ -242,9 +252,12 @@ const CadastroRestaurante = () => {
                             disabled={loading}
                             sx={{ mt: 3, mb: 2, py: 1.5 }}
                         >   
-                            {loading ? 'Cadastrando...' : 'Cadastrar Restaurante'}
+                            {loading ? 'Adicionando...' : 'Adicionar Item'}
                         </Button>
                     </Box>
+
+                    </Box>
+
                 </Paper>
             </Container>
             <Footer />
@@ -252,4 +265,4 @@ const CadastroRestaurante = () => {
     );
 };
 
-export default CadastroRestaurante;
+export default AdicionarItemCardapio;

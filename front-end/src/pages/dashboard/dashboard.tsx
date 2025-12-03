@@ -1,14 +1,14 @@
 import { Box, Typography, Paper} from '@mui/material';
-import React, { useState } from 'react';
-import { useNavigate, Link as MuiRouterLink } from 'react-router-dom'; // 🚨 Renomeei 'RouterLink' para 'MuiRouterLink' para evitar confusão de nomes
-// 🚨 Importando o componente Carousel
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link as MuiRouterLink } from 'react-router-dom';
 import Carousel from 'react-multi-carousel'; 
 import 'react-multi-carousel/lib/styles.css';
-import Navbar from '../../components/layout/navbar/navbar';
 
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Navbar from '../../components/layout/navbar/navbar';
 import Footer from '../../components/layout/footer/footer';
+import RestauranteCard from '../../components/RestauranteCard/restauranteCard';
+import { estabelecimentoService, type Estabelecimento } from '../../services/estabelecimentoService';
+
 // ----------------------------------------------------------------------
 // 1. DEFINIÇÃO DO COMPONENTE RatingStars (Avaliação)
 // ----------------------------------------------------------------------
@@ -16,46 +16,6 @@ interface RatingProps {
   value: number;
   total?: number;
 }
-
-const RatingStars: React.FC<RatingProps> = ({ value, total = 5 }) => (
-  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-    {Array.from({ length: total }).map((_, index) => {
-      const isFilled = index < value;
-      return isFilled ? (
-        <StarIcon key={index} sx={{ color: '#FFD700', fontSize: '1rem' }} />
-      ) : (
-        <StarBorderIcon key={index} sx={{ color: '#FFD700', fontSize: '1rem' }} />
-      );
-    })}
-  </Box>
-);
-
-// ----------------------------------------------------------------------
-// 2. DADOS MOCK PARA O CARROSSEL (topProducts) - Adicionado 'id'
-// ----------------------------------------------------------------------
-const topProducts = [
-  { id: 'rest_001', name: 'Gulliver', desc: 'Descrição...', logo: 'gulliver-logo.png', img: 'https://placehold.co/400x180/cc5555/white?text=Gulliver', rating: 5 },
-  { id: 'rest_002', name: 'Tonho de Martinha', desc: 'Descrição...', logo: '', img: 'https://placehold.co/400x180/777777/white?text=Tonho', rating: 4 },
-  { id: 'rest_003', name: 'Sal e Brasa', desc: 'Descrição...', logo: 'sal-brasa-logo.png', img: 'https://placehold.co/400x180/333333/white?text=Sal+e+Brasa', rating: 5 },
-  { id: 'rest_004', name: 'Pizzaria Forno a Lenha', desc: 'Descrição...', logo: 'pizza-logo.png', img: 'https://placehold.co/400x180/dd8888/white?text=Pizza', rating: 5 },
-  { id: 'rest_005', name: 'Mais Um Restaurante', desc: 'Detalhes aqui...', logo: '', img: 'https://placehold.co/400x180/aabbcc/white?text=Extra', rating: 3 },
-  { id: 'rest_006', name: 'Último na Lista', desc: 'Final do carrossel.', logo: 'last-logo.png', img: 'https://placehold.co/400x180/ddeeff/white?text=Final', rating: 4 },
-];
-
-// ----------------------------------------------------------------------
-// 3. DADOS MOCK PARA A LISTA VERTICAL - Adicionado 'id'
-// ----------------------------------------------------------------------
-const listProducts = [
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-
-];
 
 // ----------------------------------------------------------------------
 // 4. CONFIGURAÇÃO DE RESPONSIVIDADE DO CARROSSEL
@@ -84,9 +44,32 @@ const responsive = {
 };
 
 
-const Dashboardt = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState([]);
+  const [restaurantes, setRestaurantes] = useState<Estabelecimento[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchRestaurantes = async () => {
+      try {
+        setLoading(true);
+        const data = await estabelecimentoService.listarTodos();
+        // A API retorna um array de objetos que correspondem à interface Estabelecimento
+        setRestaurantes(data); 
+      } catch (err) {
+        setError('Não foi possível carregar os restaurantes.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurantes();
+  }, []);
+
+  const destaques = restaurantes.slice(0, 7);
+  const maisRestaurantes = restaurantes.slice(7);
 
   return (
     <Box>
@@ -116,77 +99,22 @@ const Dashboardt = () => {
               containerClass="carousel-container" 
               itemClass="carousel-item-padding-40-px" 
             >
-              {topProducts.map((product, index) => (
-                // O Box aqui serve para encapsular o Paper e usar o itemClass do carrossel para espaçamento
-                <Box key={index} sx={{ px: 1 ,}}> 
-                  <Paper
-                    elevation={3}
-                    sx={{
-                      height: 'auto', 
-                      borderRadius: 1,
-                      overflow: 'hidden',
-                      cursor: 'pointer', 
-                      transition: 'transform 0.2s',
-                      '&:hover': {
-                        transform: 'translateY(-3px)', 
-                      }
-                    }}
-                  >
-                    {/* Tornando clicavel os cards */}
-                    <MuiRouterLink to={`/restaurante/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <Box sx={{ position: 'relative' }}>
-
-                        {/* Imagem do Produto */}
-                        <Box
-                          component="img"
-                          src={product.img} 
-                          alt={product.name}
-                          sx={{ width: '100%', height: 180, objectFit: 'cover' }}
-                        />
-
-                        {/* Detalhes do Card */}
-                        <Box sx={{ p: 1.5 }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-
-                            {/* Logo */}
-                            {product.logo && (
-                              <Box
-                                component="img"
-                                src={product.logo}
-                                alt={`${product.name} Logo`}
-                                sx={{
-                                  width: 30,
-                                  height: 30,
-                                  borderRadius: '20%',
-                                  position: 'absolute',  
-                                  boxShadow: 1,
-                                  bgcolor: 'white' 
-                                }}
-                              />
-                            )}
-
-                            {/* Nome do Restaurante */}
-                            <Typography variant="subtitle1" fontWeight="600" sx={{ ml: product.logo ? 4.5 : 0 }}>
-                              {product.name}
-                            </Typography>
-                          </Box>
-
-                          <Typography variant="body2" color="text.secondary">
-                            {product.desc}
-                          </Typography>
-
-                          <Box sx={{ mt: 1 }}>
-                            <RatingStars value={product.rating} />
-                          </Box>
-                        </Box>
-                      </Box>
-                    </MuiRouterLink> {/* Fim do clicável*/}
-                  </Paper>
-                </Box>
+              {destaques.map((restaurante) => (
+                <RestauranteCard
+                  key={restaurante.id}
+                  id={restaurante.id}
+                  nome={restaurante.nome}
+                  endereco={restaurante.endereco}
+                  descricao={restaurante.descricao}
+                  capaUrl={restaurante.capaUrl}
+                  onCardClick={(id) => navigate(`/restaurante/${id}`)}
+                />
               ))}
             </Carousel>
           </Box> {/* Fim do carrosel */}
 
+          {loading && <Typography>Carregando restaurantes...</Typography>}
+          {error && <Typography color="error">{error}</Typography>}
 
           {/* Linha Separadora  */}
           <Box sx={{ my: 4, borderBottom: '1px solid #cfcfcfff' }} />
@@ -198,7 +126,7 @@ const Dashboardt = () => {
 
           {/* 2. Lista Vertical (listProducts) */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
-            {listProducts.map((item, index) => (
+            {maisRestaurantes.map((item, index) => (
               
               <MuiRouterLink 
                 key={index} 
@@ -215,24 +143,24 @@ const Dashboardt = () => {
                     '&:hover': {
                       opacity: 0.8, 
                     },
-                    borderBottom: index < listProducts.length - 1 ? '1px solid #cfcfcfff' : 'none'
+                    borderBottom: index < maisRestaurantes.length - 1 ? '1px solid #cfcfcfff' : 'none'
                   }}
                 >
                   {/* Imagem do Item da Lista */}
                   <Box
                     component="img"
-                    src={item.img}
-                    alt={item.name}
+                    src={item.capaUrl || 'https://placehold.co/80x80/eeeeee/cccccc?text=Sem+Foto'}
+                    alt={item.nome}
                     sx={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 1, mr: 2 }}
                   />
 
                   {/* Detalhes da Lista */}
                   <Box>
                     <Typography variant="h6" fontWeight="600" sx={{ mb: 0.5 }}>
-                      {item.name}
+                      {item.nome}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {item.desc}
+                      {item.descricao || 'Sem descrição disponível.'}
                     </Typography>
                   </Box>
                 </Box>
@@ -247,4 +175,4 @@ const Dashboardt = () => {
   );
 }
 
-export default Dashboardt;
+export default Dashboard;

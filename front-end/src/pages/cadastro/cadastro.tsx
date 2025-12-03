@@ -9,7 +9,7 @@ import {
     Alert,
     Link 
 } from '@mui/material';
-import {useNavigate, Link as RouterLink} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import { cadastroService } from '../../services/authService';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -59,11 +59,11 @@ const Cadastro = () => {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'flex-end',
-                backgroundImage: `linear-gradient(to right,rgba(0, 0, 0, 0.42),rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.99)), url(${chefbackground}) `,
+                backgroundImage: `linear-gradient(to right,rgba(0, 0, 0, 0.42),rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.99)), url(${chefbackground})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'right'
             }}
-        >  
+        >
         {/* Ícone do site  */}
         <Link 
                 href="/" 
@@ -126,7 +126,7 @@ const Cadastro = () => {
                         backgroundColor: 'rgba(15, 15, 15, 0.28)',
                         backdropFilter: 'blur(10px)',
                         p: 4, 
-                        width: '100%',  
+                        width: '100%',
                         display: 'flex', 
                         flexDirection: 'column', 
                         alignItems: 'center',

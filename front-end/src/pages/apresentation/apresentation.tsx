@@ -88,7 +88,7 @@ const Apresentation = () => {
                         {/* Cadastre sua empresa */}
                         <Link 
                             component={RouterLink}
-                            to="/cadastro" 
+                            to="/cadastro-restaurante" 
                             variant="body1" 
                             sx={{ 
                                 fontFamily: 'sans-serif',
@@ -110,7 +110,7 @@ const Apresentation = () => {
                         {/* Restaurantes */}
                         <Link 
                             component={RouterLink}
-                            to="/dashboardt" 
+                            to="/dashboard" 
                             variant="body1" 
                             sx={{ 
                                 fontFamily: 'sans-serif',

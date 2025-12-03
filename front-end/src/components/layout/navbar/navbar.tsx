@@ -60,7 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: 'auto',
+      width: '40vw',
     },
   },
 }));
@@ -70,6 +70,8 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+  const [searchValue, setSearchValue] = React.useState('');
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -91,10 +93,22 @@ export default function PrimarySearchAppBar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleNavigateToCadastroRestaurante = () => {
+    handleMenuClose();
+    navigate('/cadastro-restaurante');
+  };
+
   const handleLogout = () => {
     handleMenuClose(); // Fecha o menu
     signOut(); // Executa o logout
     // O ideal é redirecionar o usuário para a página de login ou inicial
+  };
+
+  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && searchValue.trim()) {
+      // Navega para a página de busca com o valor como query param
+      navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+    }
   };
 
   const menuId = 'primary-search-account-menu';
@@ -116,6 +130,8 @@ export default function PrimarySearchAppBar() {
     >
       {/* 2. Exibe o nome do usuário se ele estiver logado */}
       {user && <MenuItem disabled>Olá, {user.nome}</MenuItem>}
+
+      {user && <MenuItem onClick={handleNavigateToCadastroRestaurante}>Criar restaurante</MenuItem>}
 
       {/* 3. Renderiza o item "Meu Restaurante" apenas se o usuário tiver um restaurante associado */}
       {user?.restauranteId && (
@@ -215,6 +231,9 @@ export default function PrimarySearchAppBar() {
                 <StyledInputBase
                 placeholder="Pesquise seu restaurante"
                 inputProps={{ 'sans-serif': 'search' }}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onKeyDown={handleSearch}
                 />
             </Search>
 

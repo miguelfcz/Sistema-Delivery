@@ -44,7 +44,7 @@ export const estabelecimentoService = {
     },
 
     buscarPorId: async (id: number) => {
-        const response = await api.get<Estabelecimento>(`/estabelecimentos/${id}`);
+        const response = await api.get<Estabelecimento>('/estabelecimentos/${id}');
         return response.data;
     }
 };

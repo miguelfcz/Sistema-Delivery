@@ -46,6 +46,8 @@ const Login = () => {
         }
     };
 
+
+    
     return (
         <Box
         >      
@@ -62,7 +64,8 @@ const Login = () => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'right'
             }}
-        >  
+        >
+
         {/* Ícone do site  */}
         <Link 
                 href="/" 
@@ -125,7 +128,7 @@ const Login = () => {
                         backgroundColor: 'rgba(15, 15, 15, 0.28)',
                         backdropFilter: 'blur(10px)',
                         p: 4, 
-                        width: '100%',  
+                        width: '100%',
                         display: 'flex', 
                         flexDirection: 'column', 
                         alignItems: 'center',
@@ -142,6 +145,7 @@ const Login = () => {
                     >
                         Login
                     </Typography>
+
                      {/* Box de Email  */}
                     <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1, width: '100%' }}>
                         <TextField
@@ -167,6 +171,7 @@ const Login = () => {
                                 }
                             }}
                         />
+
                         {/* Box de Senha  */}
                         <TextField
                             margin="normal"
@@ -225,6 +230,7 @@ const Login = () => {
                             Cadastre-se
                         </Link>
                     </Typography>
+
                 </Paper>
             </Container>
         </Box>
