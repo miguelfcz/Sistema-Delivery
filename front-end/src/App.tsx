@@ -9,6 +9,8 @@ import Restaurante from './pages/perfil_Restaurante/restaurante';
 import CadastroRestaurante from './pages/cadastroRestaurante/cadastroRestaurante';
 import Search from './pages/search/search';
 import AdicionarItem from './pages/AdicionarItemCardapio/AdicionarItemCardapio';
+import Finalizar_pedido from './pages/carrinho_finalizar/finalizar_compra';
+
 
 
 function App() {
@@ -20,16 +22,17 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro-usuario" element={<Cadastro />} />
           <Route path="/home" element={<Apresentation />} />
-          <Route path="/restaurante/:id" element={<Restaurante />} />
+     
 
           <Route element={<PrivateRoute />}>
             <Route path="/restaurante" element={<Restaurante />} />
             <Route path="/cadastro-restaurante" element={<CadastroRestaurante />} />
             <Route path="/search" element={<Search />} />"
             <Route path="/adicionar-item" element={<AdicionarItem />} />
-            <Route path="/dashboard" element={<Dashboard />} />   
-            <Route path="/restaurante/:id/novo-produto" element={<Restaurante />} />
-            <Route path="/adicionar-item-cardapio" element={<AdicionarItem />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/restaurante/:id" element={<Restaurante />} />  
+            <Route path="/restaurante/:id/adicionar-item" element={<AdicionarItem />} />
+            <Route path="/finalizar-pedido" element={<Finalizar_pedido />} />
           </Route>
 
         </Routes>

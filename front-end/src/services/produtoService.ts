@@ -24,7 +24,11 @@ export const produtoService = {
     },
 
     listarPorEstabelecimento: async (idEstabelecimento: number) => {
-        const response = await api.get<Produto[]>(`/produtos/estabelecimento?id=${idEstabelecimento}`);
+        const response = await api.get<Produto[]>('/produtos', {
+            params: {
+                estabelecimentoId: idEstabelecimento
+            }
+        });
         return response.data;
     },
 

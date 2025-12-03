@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
     Box, 
     Button, 
@@ -14,11 +14,20 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Navbar from '../../components/layout/navbar/navbar';
 import Footer from '../../components/layout/footer/footer';
 import api from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
 
 const AdicionarItemCardapio = () => {
+    const { user } = useAuth();
     // 1. Pegamos o ID do restaurante direto da URL para garantir consistência
     const { id } = useParams<{ id: string }>(); 
     const navigate = useNavigate();
+    const [restaurante, setRestaurante] = useState<any>(null);
+
+    const userId = user?.usuarioId ? Number(user.usuarioId) : (user as any)?.id ? Number((user as any).id) : null;
+    const donoId = restaurante?.usuarioId ? Number(restaurante.usuarioId) : null;
+    const isDono = userId !== null && Number(id) === donoId;
+
+
     
     const [nome, setNome] = useState('');
     const [valor, setValor] = useState('');
@@ -88,10 +97,9 @@ const AdicionarItemCardapio = () => {
             const produtoPayload = {
                 nome,
                 descricao,
-                // Converte string "10,50" para number 10.5
-                preco: parseFloat(valor.replace(',', '.')), 
+                preco: parseFloat(valor.replace(',', '.')),
                 estabelecimentoId: Number(id),
-                imagemUrl: imagemUrlFinal // Envia a string da URL, não o arquivo
+                imagemUrl: imagemUrlFinal
             };
 
             await api.post('/produtos', produtoPayload);
@@ -105,8 +113,31 @@ const AdicionarItemCardapio = () => {
             setErro(msg);
         } finally {
             setLoading(false);
-        }
+        }  
     };
+
+    
+    
+    useEffect(() => {
+        const fetchRestaurante = async () => {
+            try {
+                const data = await api.get(`/estabelecimentos/${id}`);
+                setRestaurante(data.data);
+
+                const donoId = Number(data.data.usuarioId);
+                if (Number(userId) !== donoId) {
+                    alert("Você não tem permissão para acessar esta página.");
+                    navigate(`/restaurante/${id}`);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Restaurante não encontrado.");
+                navigate("/");
+            }
+        };
+
+        fetchRestaurante();
+    }, [id]);
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f5f5f5' }}>

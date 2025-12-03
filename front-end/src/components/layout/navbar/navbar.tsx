@@ -17,7 +17,9 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from '@mui/material';
 import {useNavigate, Link as RouterLink} from 'react-router-dom';
 
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import icon from '../../../assets/images/white-icon.png';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAuth } from '../../../hooks/useAuth';
 
 
@@ -72,12 +74,18 @@ export default function PrimarySearchAppBar() {
     React.useState<null | HTMLElement>(null);
   const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
+  const [anchorNotification, setAnchorNotification] = React.useState<null | HTMLElement>(null);
 
+  const isNotificationOpen = Boolean(anchorNotification);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleNotification = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorNotification(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
@@ -110,13 +118,41 @@ export default function PrimarySearchAppBar() {
       navigate(`/search?q=${encodeURIComponent(searchValue.trim())}`);
     }
   };
+  const renderNotificationMenu = (
+    <Menu
+      anchorEl={anchorNotification}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}
+      id="notification-menu"
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isNotificationOpen}
+      onClose={() => setAnchorNotification(null)}
+      sx={{ zIndex: 2000 }}  
+    >
+      <MenuItem onClick={() => { 
+        setAnchorNotification(null);
+        navigate('/comanda');
+      }}>
+        Pedidos
+      </MenuItem>
+    </Menu>
+  );
+
+
+
 
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'right',
       }}
       id={menuId}
@@ -159,14 +195,9 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
+    
+
+
 
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -184,7 +215,8 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ display: 'flex',
+    <Box sx={{ 
+                display: 'flex',
                 backgroundColor: '#1b130f',
                 height: '10vh',
                 boxShadow: 3,
@@ -203,7 +235,7 @@ export default function PrimarySearchAppBar() {
                 {/* Ícone do site (mantido absoluto para não atrapalhar o layout) */}
                     <Link 
                         component={RouterLink}
-                        to="/" 
+                        to="/dashboard" 
                         style={{ textDecoration: 'none' }} 
                         sx={{ zIndex: 100, ml: { sm: 3, md: 4 } }} // Ajuste de margem esquerda
                     >
@@ -237,7 +269,7 @@ export default function PrimarySearchAppBar() {
                 />
             </Search>
 
-            {/* ICONES DE PERFIL */}
+            {/* ICONES DE PERFIL E NOTIFICAÇÃO */}
             <Box 
                 sx={{
                     zIndex: 100, mr: { sm: 3, md: 4 },
@@ -245,9 +277,33 @@ export default function PrimarySearchAppBar() {
                     alignItems: 'center',
                 }}
             >
-                {/* Ícone de Perfil (Desktop MD) */}
+
+              <Box sx={{ mt: 1 }}>
+                <ShoppingCartIcon 
+                    sx={{cursor: "pointer", color: '#ffffffff', fontSize: '2.0rem', mr: 3}}
+                    onClick={() => navigate('/finalizar-pedido')}
+                />
+              </Box>
+
+              {/* Ícone de Notificação */}
+              <Box >
+                <IconButton 
+                    onClick={handleNotification}
+                    aria-controls="notification-menu"
+                    aria-haspopup="true"
+                    color="inherit"
+                    size="large" // Usado o size large
+                    sx={{ p: 0.5 }}
+                >
+                    <NotificationsNoneIcon 
+                        sx={{cursor: "pointer", color: 'white', fontSize: '2.0rem'}}
+                    />
+                </IconButton>
+              </Box>
+
+                {/* Ícone do Perfil */}
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    {/* Botões opcionais de Mail e Notificações podem ir aqui */}
+                  
                     
                     <IconButton
                     size="large"
@@ -278,9 +334,11 @@ export default function PrimarySearchAppBar() {
                 </Box>
             </Box>
             {/* Fim do Box Absoluto do Perfil */}
-        
+            
+            
             {renderMobileMenu}
             {renderMenu}
+            {renderNotificationMenu}
         </Box>
     </Box>
   );

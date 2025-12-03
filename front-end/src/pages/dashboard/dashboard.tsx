@@ -44,6 +44,7 @@ const responsive = {
 };
 
 
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [restaurantes, setRestaurantes] = useState<Estabelecimento[]>([]);
@@ -114,6 +115,7 @@ const Dashboard = () => {
                   descricao={restaurante.descricao}
                   capaUrl={getImageUrl(restaurante.capaUrl)}
                   onCardClick={(id) => navigate(`/restaurante/${id}`)}
+                  
                 />
               ))}
             </Carousel>
@@ -132,11 +134,11 @@ const Dashboard = () => {
 
           {/* 2. Lista Vertical (listProducts) */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2}}>
-            {maisRestaurantes.map((item, index) => (
+            {restaurantes.map((restaurante, index) => (
               
               <MuiRouterLink 
                 key={index} 
-                to={`/restaurante/${encodeURIComponent(item.nome)}`} 
+                to={`/restaurante/${encodeURIComponent(restaurante.id)}`} 
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <Box
@@ -149,24 +151,24 @@ const Dashboard = () => {
                     '&:hover': {
                       opacity: 0.8, 
                     },
-                    borderBottom: index < maisRestaurantes.length - 1 ? '1px solid #cfcfcfff' : 'none'
+                    borderBottom: index < restaurantes.length - 1 ? '1px solid #cfcfcfff' : 'none'
                   }}
                 >
                   {/* Imagem do Item da Lista */}
                   <Box
                     component="img"
-                    src={getImageUrl(item.capaUrl) || 'https://placehold.co/80x80/eeeeee/cccccc?text=Sem+Foto'}
-                    alt={item.nome}
+                    src={getImageUrl(restaurante.capaUrl) || 'https://placehold.co/80x80/eeeeee/cccccc?text=Sem+Foto'}
+                    alt={restaurante.nome}
                     sx={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 1, mr: 2 }}
                   />
 
                   {/* Detalhes da Lista */}
                   <Box>
                     <Typography variant="h6" fontWeight="600" sx={{ mb: 0.5 }}>
-                      {item.nome}
+                      {restaurante.nome}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {item.descricao || 'Sem descrição disponível.'}
+                      {restaurante.endereco || 'Sem descrição disponível.'}
                     </Typography>
                   </Box>
                 </Box>
