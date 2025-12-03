@@ -185,7 +185,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\italo\\Documents\\faculProjects\\Cardapio-Digital\\back-end\\generated\\prisma",
+      "value": "C:\\Users\\Miguel\\Desktop\\PROGRAMACAO\\JavaScript-TypeScript\\Cardapio digital\\back-end\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -199,7 +199,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\italo\\Documents\\faculProjects\\Cardapio-Digital\\back-end\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Miguel\\Desktop\\PROGRAMACAO\\JavaScript-TypeScript\\Cardapio digital\\back-end\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

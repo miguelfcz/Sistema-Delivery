@@ -3,19 +3,28 @@ import usuarioService, { UsuarioSemSenha } from "../services/userService";
 import { getUsuarioProfileService } from "../services/userService";
 import { ZodError } from "zod";
 import { createUserSchema } from "../validators/userValidator";
+import { gerarToken } from "../controllers/jwt";
+
+
 
 interface AuthRequest extends Request {
     user?: { id: number };
 }
 
 const usuarioController = {
-    async createUsuario(req: Request, res: Response){
+    async createUsuario(req: Request, res: Response) {
         try {
             const { body } = createUserSchema.parse(req);
-            
+    
             const novoUsuario: UsuarioSemSenha = await usuarioService.createUsuario(body);
-            res.status(201).json(novoUsuario);
-            
+    
+            const token = gerarToken(novoUsuario.id);
+            res.status(201).json({
+                message: "Usuário criado com sucesso",
+                token,
+                usuario: novoUsuario
+            });
+    
         } catch (error) {
             if (error instanceof ZodError) {
                 return res.status(400).json({ 
@@ -26,7 +35,7 @@ const usuarioController = {
             if (error instanceof Error) {
                 return res.status(400).json({ error: error.message });
             }
-            return res.status(500).json("Erro interno no servidor." );
+            return res.status(500).json("Erro interno no servidor.");
         }
     }
 }

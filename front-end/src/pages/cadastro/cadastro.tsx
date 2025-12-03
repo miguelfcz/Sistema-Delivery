@@ -18,8 +18,6 @@ import icon from '../../assets/images/orange-icon.png';
 import thema from '../../assets/images/thema.png';
 import Footer from '../../components/layout/footer/footer';
 
-
-
 const Cadastro = () => {
     const { signIn } = useAuth();
     const navigate = useNavigate();
@@ -28,25 +26,33 @@ const Cadastro = () => {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
+    // 1. Adicionado estado de loading
     const [loading, setLoading] = useState(false);
 
     const handleCadastro = async (e: React.FormEvent) => {
         e.preventDefault();
         setErro('');
-        setLoading(true);
+
+        // 2. PROTEÇÃO CONTRA DUPLO CLIQUE
+        // Se já estiver carregando, para a execução aqui.
+        if (loading) return;
+
+        setLoading(true); // Bloqueia o botão imediatamente
     
         try {
             const data = await cadastroService.cadastro(nome, email, senha);
             
             signIn(data.token);
             navigate('/dashboard'); 
+            // Não fazemos setLoading(false) aqui porque a página vai mudar
     
         } catch (error: any) {
             const msg = error.response?.data?.message || 'Não foi possível cadastrar. Verifique seus dados.';
             setErro(msg);
-        } finally {
+            
+            // 3. Só desbloqueia se der erro, para o usuário tentar corrigir
             setLoading(false);
-        }
+        } 
     };
 
     return (
@@ -225,7 +231,7 @@ const Cadastro = () => {
                             fullWidth
                             variant="contained"
                             size="large"
-                            disabled={loading}
+                            disabled={loading} // Adicionada prop disabled
                             sx={{ 
                                 mt: 3, 
                                 mb: 2,
@@ -241,7 +247,7 @@ const Cadastro = () => {
                                 }
                             }}
                         >
-                            {loading ? 'Por Favor Aguarde...' : 'Criar Conta'}
+                            {loading ? 'Aguarde...' : 'Criar Conta'}
                         </Button>
                     </Box>
                     

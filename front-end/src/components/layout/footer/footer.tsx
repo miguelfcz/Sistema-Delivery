@@ -18,44 +18,29 @@ const Footer = () => {
       <Container maxWidth="lg">
         
         {/* 3. Grid: Usado para dispor links e colunas */}
-        <Grid container spacing={4} justifyContent="space-between">
-          
-          {/* Coluna 1: Informações da Empresa / Logo */}
-          <Grid item xs={12} sm={4} md={4}>
-            <Typography variant="h6" gutterBottom fontWeight={'bold'}>
+        <Grid container spacing={0} justifyContent="center" textAlign="center">
+          <Grid 
+              item 
+              xs={12} 
+              sm={4} 
+              md={4}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center'
+              }}
+            >
+                <Typography variant="h6" gutterBottom fontWeight={'bold'}>
+                  Cardapiu
+                </Typography>
 
-              Cardapiu
-
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              &copy; {new Date().getFullYear()} Todos os direitos reservados.
-            </Typography>
+                <Typography variant="body2" color="white">
+                  &copy; {new Date().getFullYear()} Todos os direitos reservados.
+                </Typography>
           </Grid>
-
-          {/* Coluna 2: Links Rápidos */}
-          <Grid item xs={6} sm={4} md={4}>
-            <Typography variant="subtitle1" gutterBottom>
-              Links Rápidos
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-              <Link href="/restaurantes" color="inherit" underline="hover">Restaurantes</Link>
-              <Link href="/sobre" color="inherit" underline="hover">Cadastre seu Restaurante</Link>
-              <Link href="/contato" color="inherit" underline="hover">Contato</Link>
-            </Box>
-          </Grid>
-
-          {/* Coluna 3: Redes Sociais / Contato */}
-          <Grid item xs={6} sm={4} md={4}>
-            <Typography variant="subtitle1" gutterBottom>
-              Siga-nos
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Link href="#" color="inherit" underline="none"> {/* Ícone 1 */} Facebook </Link>
-              <Link href="#" color="inherit" underline="none"> {/* Ícone 2 */} Instagram </Link>
-            </Box>
-          </Grid>
-
         </Grid>
+
         
         {/* Linha Divisória */}
         <Box sx={{ pt: 4, borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
