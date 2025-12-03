@@ -136,7 +136,7 @@ const Dashboard = () => {
               
               <MuiRouterLink 
                 key={index} 
-                to={`/restaurante/${item.id}`} 
+                to={`/restaurante/${encodeURIComponent(item.nome)}`} 
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <Box
