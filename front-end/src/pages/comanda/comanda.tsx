@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
     Box, 
     Typography, 
@@ -7,110 +7,122 @@ import {
     Divider, 
     Container, 
     CircularProgress,
-    Alert 
+    Alert,
+    Snackbar
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import Footer from '../../components/layout/footer/footer';
 import Navbar from '../../components/layout/navbar/navbar';
+import Footer from '../../components/layout/footer/footer';
+import { pedidoService } from '../../services/pedidoService'; // Importando o service real
+import { useAuth } from '../../hooks/useAuth'; // Supondo que você tenha o hook de auth
 
-
-// 🚨 Interfaces Mock Atualizadas
-interface Cliente {
+// Interfaces ajustadas para o retorno provável do Back-end
+// Verifique no console.log se o seu backend retorna exatamente essa estrutura (Prisma)
+interface Produto {
     nome: string;
-}
-interface ItemDetalhe {
-    produto: { nome: string };
-    quantidade: number;
-}
-interface RestauranteInfo { // Novo objeto para o nome do restaurante
-    nome: string;
+    preco?: number;
 }
 
-interface PedidoComCliente {
+interface ItemPedido {
     id: number;
-    cliente: Cliente;
+    quantidade: number;
+    produto: Produto;
+}
+
+interface Cliente {
+    id: number;
+    nome: string;
+    email: string;
+}
+
+interface RestauranteInfo {
+    nome: string;
+}
+
+interface Pedido {
+    id: number;
     total: number;
     endereco: string;
-    // 🚨 Status removido
-    restaurante: RestauranteInfo; // 🚨 Adicionada informação do restaurante
-    itens: ItemDetalhe[];
+    status: string;
+    criadoEm?: string;
+    usuario: Cliente; // O backend geralmente retorna 'usuario' ou 'cliente' dependendo do include do Prisma
+    itens: ItemPedido[];
+    estabelecimento: RestauranteInfo;
 }
 
 const PRIMARY_ORANGE = '#FF7F3A';
 
-const MOCK_PEDIDOS: PedidoComCliente[] = [
-    { 
-        id: 101, 
-        cliente: { nome: 'João Silva' }, 
-        total: 154.90, 
-        endereco: 'Rua Principal, 456, Centro - João Pessoa', 
-        restaurante: { nome: 'Churrascaria Gourmet' }, // Mockado
-        itens: [{ produto: { nome: 'Picanha' }, quantidade: 1 }, { produto: { nome: 'Cerveja' }, quantidade: 3 }]
-    },
-    { 
-        id: 102, 
-        cliente: { nome: 'Maria Souza' }, 
-        total: 59.90, 
-        endereco: 'Av. Brasil, 100, Bairro Novo - Campina Grande', 
-        restaurante: { nome: 'Pizzaria Express' }, // Mockado
-        itens: [{ produto: { nome: 'Feijoada' }, quantidade: 1 }]
-    },
-    { 
-        id: 103, 
-        cliente: { nome: 'Carlos Oliveira' }, 
-        total: 21.00, 
-        endereco: 'Rua das Flores, 50, Bessa - João Pessoa', 
-        restaurante: { nome: 'Café da Esquina' }, // Mockado
-        itens: [{ produto: { nome: 'Refrigerante' }, quantidade: 2 }]
-    },
-];
-
-
 const Comanda = () => {
-    const [pedidos, setPedidos] = useState<PedidoComCliente[]>(MOCK_PEDIDOS);
-    const [loading, setLoading] = useState(false);
+    const [pedidos, setPedidos] = useState<Pedido[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [actionLoading, setActionLoading] = useState<number | null>(null); // Loading por botão
     const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
+    const [successMsg, setSuccessMsg] = useState<string | null>(null);
+    
+    // Auth context para pegar dados do usuário/restaurante se disponível
+    const { user } = useAuth(); 
 
-    // 🚨 Supondo que você tem uma forma de obter o ID do restaurante logado
-    const RESTAURANTE_ID_MOCK = 1; 
+    // 🚨 ATENÇÃO: Aqui você precisa definir como pega o ID do estabelecimento logado.
+    // Se o usuário logado FOR o dono, talvez o ID do estabelecimento esteja atrelado ao user.
+    // Por enquanto, vou deixar fixo ou tentar pegar do user, ajuste conforme sua lógica de login.
+    const ID_ESTABELECIMENTO_ATUAL = 3; 
 
-    // Função para simular a chamada de atualização de status (Ainda simula o Concluído)
-    const handleFinalizarPedido = async (idPedido: number) => {
-        setLoading(true);
-        setError(null);
-        
+    const fetchPedidos = useCallback(async () => {
         try {
-            // 🚨 Simulação de chamada de API: Mudar status para 'CONCLUIDO'
-            // await pedidoService.atualizarStatus(idPedido, 'CONCLUIDO'); 
+            setLoading(true);
+            const dados = await pedidoService.listarPorEstabelecimento(ID_ESTABELECIMENTO_ATUAL);
             
-            // Atualiza o estado local: remove o pedido concluído da visualização ativa
-            setPedidos(prev => 
-                prev.filter(pedido => pedido.id !== idPedido)
-            );
-
-            alert(`Entrega do Pedido #${idPedido} concluída com sucesso!`);
+            // Filtra apenas pedidos que NÃO estão concluídos ou cancelados, se desejar.
+            // Se quiser mostrar todos, remova o filter.
+            const pedidosAtivos = dados.filter((p: any) => p.status !== 'CONCLUIDO' && p.status !== 'CANCELADO');
             
-        } catch (e: any) {
-            console.error("Erro ao finalizar pedido:", e);
-            setError(`Falha ao finalizar pedido #${idPedido}.`);
+            setPedidos(pedidosAtivos);
+        } catch (err) {
+            console.error("Erro ao buscar pedidos:", err);
+            setError('Não foi possível carregar os pedidos. Verifique sua conexão.');
         } finally {
             setLoading(false);
         }
+    }, [ID_ESTABELECIMENTO_ATUAL]);
+
+    useEffect(() => {
+        fetchPedidos();
+        
+        // Opcional: Polling para atualizar pedidos a cada 30 segundos
+        const interval = setInterval(fetchPedidos, 30000);
+        return () => clearInterval(interval);
+    }, [fetchPedidos]);
+
+    const handleFinalizarPedido = async (idPedido: number) => {
+        setActionLoading(idPedido);
+        setError(null);
+        
+        try {
+            // Chama a API real
+            await pedidoService.atualizarStatus(idPedido, 'CONCLUIDO');
+            
+            setSuccessMsg(`Pedido #${idPedido} finalizado com sucesso!`);
+            
+            // Atualiza a lista removendo o item ou buscando novamente
+            setPedidos(prev => prev.filter(p => p.id !== idPedido));
+            
+        } catch (e: any) {
+            console.error("Erro ao finalizar pedido:", e);
+            setError(`Falha ao finalizar pedido #${idPedido}. Tente novamente.`);
+        } finally {
+            setActionLoading(null);
+        }
     };
-    
-    // 🚨 Removido o filtro de status; todos os pedidos são exibidos
-    const activePedidos = pedidos; 
+
+    const handleCloseSnack = () => setSuccessMsg(null);
 
     // Componente Item da Comanda
-    const PedidoItem = ({ pedido }: { pedido: PedidoComCliente }) => (
+    const PedidoItem = ({ pedido }: { pedido: Pedido }) => (
         <Paper 
             elevation={2} 
             sx={{ 
                 mb: 3, 
                 p: 3, 
-                // 🚨 Novo destaque lateral baseado na cor da marca
-                borderLeft: `5px solid ${PRIMARY_ORANGE}`, 
+                borderLeft: `5px solid ${pedido.status === 'EM_PREPARO' ? '#2196F3' : PRIMARY_ORANGE}`, 
                 display: 'flex',
                 flexDirection: { xs: 'column', sm: 'row' },
                 justifyContent: 'space-between',
@@ -118,50 +130,45 @@ const Comanda = () => {
                 gap: 2
             }}
         >
-            {/* -------------------- COLUNA ESQUERDA: DETALHES DO PEDIDO -------------------- */}
             <Box sx={{ flexGrow: 1, minWidth: { xs: '100%', sm: '50%' } }}>
                 <Typography variant="subtitle1" fontWeight="bold">
-                    Pedido #{pedido.id} - Cliente: {pedido.cliente.nome}
+                    Pedido #{pedido.id} - Cliente: {pedido.usuario?.nome || 'Cliente não identificado'}
                 </Typography>
                 
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                     **Endereço:** {pedido.endereco}
                 </Typography>
+                
+                <Typography variant="caption" sx={{ display: 'block', mt: 0.5, color: 'text.secondary' }}>
+                   Status: {pedido.status}
+                </Typography>
 
                 <Divider sx={{ my: 1 }} />
                 
-                <Typography variant="body2" color="text.primary" sx={{ fontStyle: 'italic' }}>
-                    Itens: {pedido.itens.map(i => `${i.produto.nome} (${i.quantidade}x)`).join(', ')}
-                </Typography>
+                <Box>
+                    {pedido.itens && pedido.itens.map((item, index) => (
+                        <Typography key={index} variant="body2" color="text.primary" sx={{ fontStyle: 'italic' }}>
+                            - {item.quantidade}x {item.produto?.nome}
+                        </Typography>
+                    ))}
+                </Box>
                 
                 <Typography variant="body1" fontWeight="bold" color={PRIMARY_ORANGE} sx={{ mt: 1 }}>
-                    Total: R$ {pedido.total.toFixed(2).replace('.', ',')}
+                    Total: R$ {Number(pedido.total).toFixed(2).replace('.', ',')}
                 </Typography>
-                
             </Box>
 
-            {/* -------------------- COLUNA DIREITA: INFORMAÇÃO E AÇÃO -------------------- */}
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: 150 }}>
-                
-                {/* 🚨 NOVO: Nome do Restaurante */}
-                <Typography 
-                    variant="caption" 
-                    fontWeight="bold"
-                    sx={{ color: 'text.primary', mb: 1 }}
-                >
-                    RESTAURANTE: {pedido.restaurante.nome.toUpperCase()}
-                </Typography>
-
                 <Button
                     variant="contained"
                     onClick={() => handleFinalizarPedido(pedido.id)}
-                    disabled={loading}
+                    disabled={actionLoading === pedido.id}
                     sx={{ 
                         backgroundColor: PRIMARY_ORANGE,
                         '&:hover': { backgroundColor: '#E56D30' }
                     }}
                 >
-                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Finalizar Entrega'}
+                    {actionLoading === pedido.id ? <CircularProgress size={24} color="inherit" /> : 'Finalizar'}
                 </Button>
             </Box>
         </Paper>
@@ -172,25 +179,33 @@ const Comanda = () => {
             <Navbar />
             
             <Container component="main" maxWidth="lg" sx={{ my: 4, flexGrow: 1 }}>
-                
                 <Typography variant="h3" fontWeight="bold" textAlign="center" sx={{ mb: 4 }}>
                     Comanda de Pedidos
                 </Typography>
 
-                {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
+                {error && <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError(null)}>{error}</Alert>}
                 
-                {activePedidos.length === 0 ? (
-                    <Alert severity="info" sx={{ mt: 3 }}>Nenhum pedido ativo no momento.</Alert>
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
+                        <CircularProgress sx={{ color: PRIMARY_ORANGE }} />
+                    </Box>
+                ) : pedidos.length === 0 ? (
+                    <Alert severity="info" sx={{ mt: 3 }}>Nenhum pedido pendente no momento.</Alert>
                 ) : (
                     <Box>
-                        {activePedidos.map(pedido => (
+                        {pedidos.map(pedido => (
                             <PedidoItem key={pedido.id} pedido={pedido} />
                         ))}
                     </Box>
                 )}
-
             </Container>
             
+            <Snackbar open={!!successMsg} autoHideDuration={6000} onClose={handleCloseSnack}>
+                <Alert onClose={handleCloseSnack} severity="success" sx={{ width: '100%' }}>
+                    {successMsg}
+                </Alert>
+            </Snackbar>
+
             <Footer />
         </Box>
     );

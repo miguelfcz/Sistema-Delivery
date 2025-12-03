@@ -30,12 +30,12 @@ export const  pedidoService = { //criando pedido
     },
 
     listarPorEstabelecimento: async (idEstabelecimento: number) => {
-        const response = await api.get(`/pedidos/estalecimento?id=${idEstabelecimento}`);
+        const response = await api.get(`/pedidos/estabelecimento?id=${idEstabelecimento}`);
         return response.data;
     },
 
     atualizarStatus: async (idPedido: number, status: string) => {
-        const response = await api.put(`/pedidos/${idPedido}/status`, {status});
+        const response = await api.patch(`/pedidos/${idPedido}/status`, {status});
         return response.data;
     }
 }

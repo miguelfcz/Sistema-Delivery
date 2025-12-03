@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import Navbar from '../../components/layout/navbar/navbar';
 import Paper from '@mui/material/Paper';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'; // Ícone para pedir
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Footer from '../../components/layout/footer/footer';
 import { estabelecimentoService, type Estabelecimento } from '../../services/estabelecimentoService';
 import { produtoService, type Produto } from '../../services/produtoService';
