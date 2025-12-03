@@ -120,7 +120,7 @@ const Restaurante = () => {
                     </Box>
 
                     {/* --- BOTÃO ADICIONAR PRATO --- */}
-                    <Box sx={{ ml: 'auto', mr: 8, display: 'flex', flexDirection: 'column', alignItems:'center'}}>
+                    <Box sx={{ ml: '10vw', mr: 8, display: 'flex', flexDirection: 'column', alignItems:'center'}}>
                         {isDono ? (
                             <MuiRouterLink 
                                 to={`/restaurante/${restaurante.id}/adicionar-item`} 

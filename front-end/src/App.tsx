@@ -9,6 +9,8 @@ import Restaurante from './pages/perfil_Restaurante/restaurante';
 import CadastroRestaurante from './pages/cadastroRestaurante/cadastroRestaurante';
 import Search from './pages/search/search';
 import AdicionarItem from './pages/AdicionarItemCardapio/AdicionarItemCardapio';
+import Finalizar_pedido from './pages/carrinho_finalizar/finalizar_compra';
+
 
 
 function App() {
@@ -30,6 +32,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/restaurante/:id" element={<Restaurante />} />  
             <Route path="/restaurante/:id/adicionar-item" element={<AdicionarItem />} />
+            <Route path="/finalizar-pedido" element={<Finalizar_pedido />} />
           </Route>
 
         </Routes>
