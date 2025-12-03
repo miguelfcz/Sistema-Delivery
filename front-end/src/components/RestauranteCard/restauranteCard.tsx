@@ -21,7 +21,15 @@ export interface RestauranteCardProps {
 const RestauranteCard: React.FC<RestauranteCardProps> = ({ id, nome, descricao, endereco , capaUrl, onCardClick }) => {
   return (
     // O margin: 1 ajuda a separar os cards dentro do carrossel
-    <Card sx={{ maxWidth: 300, minWidth: 250, margin: 1, boxShadow: 3 }}>
+    <Card sx={{ maxWidth: 300, minWidth: 250, margin: 1, boxShadow: 3, height: '92%', 
+                        transition: '0.2s',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          backgroundColor: '#e7e7e7ff',
+                          transform: 'translateY(-8px)',
+                          boxShadow: 6,
+                        },     
+                     }}>
       {/* Tornando toda a área de conteúdo clicável */}
       <CardActionArea onClick={() => onCardClick(id)}>
         <CardMedia

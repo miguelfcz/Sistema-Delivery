@@ -20,15 +20,16 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro-usuario" element={<Cadastro />} />
           <Route path="/home" element={<Apresentation />} />
+     
 
           <Route element={<PrivateRoute />}>
             <Route path="/restaurante" element={<Restaurante />} />
             <Route path="/cadastro-restaurante" element={<CadastroRestaurante />} />
             <Route path="/search" element={<Search />} />"
             <Route path="/adicionar-item" element={<AdicionarItem />} />
-            <Route path="/dashboard" element={<Dashboard />} />   
-            <Route path="restaurante/:id" element={<Restaurante />} />
-            <Route path="/adicionar-item-cardapio" element={<AdicionarItem />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/restaurante/:id" element={<Restaurante />} />  
+            <Route path="/restaurante/:id/adicionar-item" element={<AdicionarItem />} />
           </Route>
 
         </Routes>
