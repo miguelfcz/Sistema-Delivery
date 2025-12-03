@@ -107,7 +107,7 @@ const Dashboard = () => {
                   endereco={restaurante.endereco}
                   descricao={restaurante.descricao}
                   capaUrl={restaurante.capaUrl}
-                  onCardClick={(id) => navigate(`/restaurante/${id}`)}
+                  onCardClick={() => navigate(`/restaurante/${restaurante.id}`)}
                 />
               ))}
             </Carousel>
@@ -130,7 +130,7 @@ const Dashboard = () => {
               
               <MuiRouterLink 
                 key={index} 
-                to={`/restaurante/${item.id}`} 
+                to={`/restaurante/${encodeURIComponent(item.nome)}`} 
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <Box

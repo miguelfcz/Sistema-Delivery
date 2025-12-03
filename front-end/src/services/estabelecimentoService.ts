@@ -6,6 +6,7 @@ export interface EstabelecimentoInput {
     cnpj?: string;
     descricao?: string;
     capaUrl?: string;
+
 }
 
 export interface Estabelecimento {
@@ -44,7 +45,12 @@ export const estabelecimentoService = {
     },
 
     buscarPorId: async (id: number) => {
-        const response = await api.get<Estabelecimento>('/estabelecimentos/${id}');
+        const response = await api.get<Estabelecimento>(`/estabelecimentos/${id}`);
+        return response.data;
+    },
+
+    buscarPorNome: async (nome: string) => {
+        const response = await api.get(`/estabelecimentos/nome/${encodeURIComponent(nome)}`);
         return response.data;
     }
 };

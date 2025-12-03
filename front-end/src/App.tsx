@@ -27,6 +27,8 @@ function App() {
             <Route path="/search" element={<Search />} />"
             <Route path="/adicionar-item" element={<AdicionarItem />} />
             <Route path="/dashboard" element={<Dashboard />} />   
+            <Route path="restaurante/:id" element={<Restaurante />} />
+            <Route path="/adicionar-item-cardapio" element={<AdicionarItem />} />
           </Route>
 
         </Routes>

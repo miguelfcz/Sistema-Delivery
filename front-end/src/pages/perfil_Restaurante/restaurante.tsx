@@ -19,38 +19,40 @@ const Restaurante = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!id) {
-                setError("ID do restaurante não encontrado.");
-                setLoading(false);
-                return;
+useEffect(() => {
+    const fetchData = async () => {
+
+        if (!id) {
+            setError("ID do restaurante não encontrado na URL.");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const restauranteData = await estabelecimentoService.buscarPorId(Number(id));
+            setRestaurante(restauranteData);
+            setError("");
+
+            const produtosData = await produtoService.listarPorEstabelecimento(restauranteData.id);
+            setProdutos(produtosData || []);
+
+        } catch (err: any) {
+            console.error(err);
+
+            if (err?.response?.status === 404) {
+                setError("Restaurante não encontrado.");
+            } else {
+                setError("Falha ao carregar os dados do restaurante.");
             }
-            try {
-                setLoading(true);
-                const restauranteData = await estabelecimentoService.buscarPorId(Number(id));
-                
-                // Validação: Se o restaurante não for encontrado, interrompe a execução.
-                if (!restauranteData) {
-                    setError("Restaurante não encontrado.");
-                    setLoading(false);
-                    return;
-                }
-                setRestaurante(restauranteData);
+        } finally {
+            setLoading(false);   // <-- ESSENCIAL
+        }
+    };
 
-                const produtosData = await produtoService.listarPorEstabelecimento(Number(id));
-                setProdutos(produtosData || []); // Garante que o estado seja sempre um array
-
-            } catch (err) {
-                setError("Não foi possível carregar os dados do restaurante.");
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [id]);
+    fetchData();
+}, [id]);
 
     return(
         <Box sx={{ backgroundColor:'#ffffff'}}>
@@ -172,7 +174,7 @@ const Restaurante = () => {
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems: 'inherit',
+                    alignItems: 'center',
                     pb: 1,
                     cursor: 'pointer', 
                     transition: 'opacity 0.2s',
