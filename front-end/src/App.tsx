@@ -11,6 +11,7 @@ import Search from './pages/search/search';
 import AdicionarItem from './pages/AdicionarItemCardapio/AdicionarItemCardapio';
 import Finalizar_pedido from './pages/carrinho_finalizar/finalizar_compra';
 import Comanda from './pages/comanda/comanda';
+import Estatisticas from './pages/estatisticas/Estatisticas';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
             <Route path="/restaurante/:id/adicionar-item" element={<AdicionarItem />} />
             <Route path="/finalizar-pedido" element={<Finalizar_pedido />} />
             <Route path="/comanda" element={<Comanda />} />
+            <Route path="/estatisticas" element={<Estatisticas />} />
           </Route>
 
         </Routes>
