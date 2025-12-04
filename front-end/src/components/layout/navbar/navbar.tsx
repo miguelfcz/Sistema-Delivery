@@ -167,7 +167,6 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       {/* 2. Exibe o nome do usuário se ele estiver logado */}
-      {user && <MenuItem disabled>Olá, {user.nome}</MenuItem>}
 
       {user && <MenuItem onClick={handleNavigateToCadastroRestaurante}>Criar restaurante</MenuItem>}
 
