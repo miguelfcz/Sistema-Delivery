@@ -11,19 +11,19 @@ interface AuthRequest extends Request {
 export class PedidoController {
 
     async create(req: AuthRequest, res: Response): Promise<Response> {
-        const { estabelecimentoId, itens, mesa } = req.body;
+        const { estabelecimentoId, itens, endereco } = req.body;
 
         if (!req.user) {
             return res.status(401).json({ message: 'Acesso não autorizado.' });
         }
         const usuarioId = req.user.id;
 
-        if (!estabelecimentoId || !itens || !Array.isArray(itens) || itens.length === 0) {
-            return res.status(400).json({ message: 'Os campos estabelecimentoId e uma lista de itens são obrigatórios.' });
-        }
+        if (!estabelecimentoId || !itens || !Array.isArray(itens) || itens.length === 0 || !endereco) {
+            return res.status(400).json({ message: 'Estabelecimento, itens e endereço são obrigatórios.' });
+       }
 
         try {
-            const novoPedido = await pedidoService.createPedido({ usuarioId, estabelecimentoId, itens, mesa });
+            const novoPedido = await pedidoService.createPedido({ usuarioId, estabelecimentoId, itens, endereco });
             return res.status(201).json(novoPedido);
         } catch (error) {
             if (error instanceof Error) {

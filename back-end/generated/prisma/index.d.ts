@@ -2554,6 +2554,9 @@ export namespace Prisma {
   export type EstabelecimentoMinAggregateOutputType = {
     id: number | null
     nome: string | null
+    descricao: string | null
+    cnpj: string | null
+    capaUrl: string | null
     endereco: string | null
     ativo: boolean | null
     createdAt: Date | null
@@ -2564,6 +2567,9 @@ export namespace Prisma {
   export type EstabelecimentoMaxAggregateOutputType = {
     id: number | null
     nome: string | null
+    descricao: string | null
+    cnpj: string | null
+    capaUrl: string | null
     endereco: string | null
     ativo: boolean | null
     createdAt: Date | null
@@ -2574,6 +2580,9 @@ export namespace Prisma {
   export type EstabelecimentoCountAggregateOutputType = {
     id: number
     nome: number
+    descricao: number
+    cnpj: number
+    capaUrl: number
     endereco: number
     ativo: number
     createdAt: number
@@ -2596,6 +2605,9 @@ export namespace Prisma {
   export type EstabelecimentoMinAggregateInputType = {
     id?: true
     nome?: true
+    descricao?: true
+    cnpj?: true
+    capaUrl?: true
     endereco?: true
     ativo?: true
     createdAt?: true
@@ -2606,6 +2618,9 @@ export namespace Prisma {
   export type EstabelecimentoMaxAggregateInputType = {
     id?: true
     nome?: true
+    descricao?: true
+    cnpj?: true
+    capaUrl?: true
     endereco?: true
     ativo?: true
     createdAt?: true
@@ -2616,6 +2631,9 @@ export namespace Prisma {
   export type EstabelecimentoCountAggregateInputType = {
     id?: true
     nome?: true
+    descricao?: true
+    cnpj?: true
+    capaUrl?: true
     endereco?: true
     ativo?: true
     createdAt?: true
@@ -2713,6 +2731,9 @@ export namespace Prisma {
   export type EstabelecimentoGroupByOutputType = {
     id: number
     nome: string
+    descricao: string | null
+    cnpj: string | null
+    capaUrl: string | null
     endereco: string | null
     ativo: boolean
     createdAt: Date
@@ -2742,6 +2763,9 @@ export namespace Prisma {
   export type EstabelecimentoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nome?: boolean
+    descricao?: boolean
+    cnpj?: boolean
+    capaUrl?: boolean
     endereco?: boolean
     ativo?: boolean
     createdAt?: boolean
@@ -2756,6 +2780,9 @@ export namespace Prisma {
   export type EstabelecimentoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nome?: boolean
+    descricao?: boolean
+    cnpj?: boolean
+    capaUrl?: boolean
     endereco?: boolean
     ativo?: boolean
     createdAt?: boolean
@@ -2767,6 +2794,9 @@ export namespace Prisma {
   export type EstabelecimentoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nome?: boolean
+    descricao?: boolean
+    cnpj?: boolean
+    capaUrl?: boolean
     endereco?: boolean
     ativo?: boolean
     createdAt?: boolean
@@ -2778,6 +2808,9 @@ export namespace Prisma {
   export type EstabelecimentoSelectScalar = {
     id?: boolean
     nome?: boolean
+    descricao?: boolean
+    cnpj?: boolean
+    capaUrl?: boolean
     endereco?: boolean
     ativo?: boolean
     createdAt?: boolean
@@ -2785,7 +2818,7 @@ export namespace Prisma {
     usuarioId?: boolean
   }
 
-  export type EstabelecimentoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "endereco" | "ativo" | "createdAt" | "updatedAt" | "usuarioId", ExtArgs["result"]["estabelecimento"]>
+  export type EstabelecimentoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "cnpj" | "capaUrl" | "endereco" | "ativo" | "createdAt" | "updatedAt" | "usuarioId", ExtArgs["result"]["estabelecimento"]>
   export type EstabelecimentoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     produtos?: boolean | Estabelecimento$produtosArgs<ExtArgs>
@@ -2809,6 +2842,9 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nome: string
+      descricao: string | null
+      cnpj: string | null
+      capaUrl: string | null
       endereco: string | null
       ativo: boolean
       createdAt: Date
@@ -3242,6 +3278,9 @@ export namespace Prisma {
   interface EstabelecimentoFieldRefs {
     readonly id: FieldRef<"Estabelecimento", 'Int'>
     readonly nome: FieldRef<"Estabelecimento", 'String'>
+    readonly descricao: FieldRef<"Estabelecimento", 'String'>
+    readonly cnpj: FieldRef<"Estabelecimento", 'String'>
+    readonly capaUrl: FieldRef<"Estabelecimento", 'String'>
     readonly endereco: FieldRef<"Estabelecimento", 'String'>
     readonly ativo: FieldRef<"Estabelecimento", 'Boolean'>
     readonly createdAt: FieldRef<"Estabelecimento", 'DateTime'>
@@ -3738,6 +3777,7 @@ export namespace Prisma {
     nome: string | null
     descricao: string | null
     preco: number | null
+    imagemUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
     estabelecimentoId: number | null
@@ -3748,6 +3788,7 @@ export namespace Prisma {
     nome: string | null
     descricao: string | null
     preco: number | null
+    imagemUrl: string | null
     createdAt: Date | null
     updatedAt: Date | null
     estabelecimentoId: number | null
@@ -3758,6 +3799,7 @@ export namespace Prisma {
     nome: number
     descricao: number
     preco: number
+    imagemUrl: number
     createdAt: number
     updatedAt: number
     estabelecimentoId: number
@@ -3782,6 +3824,7 @@ export namespace Prisma {
     nome?: true
     descricao?: true
     preco?: true
+    imagemUrl?: true
     createdAt?: true
     updatedAt?: true
     estabelecimentoId?: true
@@ -3792,6 +3835,7 @@ export namespace Prisma {
     nome?: true
     descricao?: true
     preco?: true
+    imagemUrl?: true
     createdAt?: true
     updatedAt?: true
     estabelecimentoId?: true
@@ -3802,6 +3846,7 @@ export namespace Prisma {
     nome?: true
     descricao?: true
     preco?: true
+    imagemUrl?: true
     createdAt?: true
     updatedAt?: true
     estabelecimentoId?: true
@@ -3899,6 +3944,7 @@ export namespace Prisma {
     nome: string
     descricao: string | null
     preco: number
+    imagemUrl: string | null
     createdAt: Date
     updatedAt: Date
     estabelecimentoId: number
@@ -3928,6 +3974,7 @@ export namespace Prisma {
     nome?: boolean
     descricao?: boolean
     preco?: boolean
+    imagemUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     estabelecimentoId?: boolean
@@ -3941,6 +3988,7 @@ export namespace Prisma {
     nome?: boolean
     descricao?: boolean
     preco?: boolean
+    imagemUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     estabelecimentoId?: boolean
@@ -3952,6 +4000,7 @@ export namespace Prisma {
     nome?: boolean
     descricao?: boolean
     preco?: boolean
+    imagemUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     estabelecimentoId?: boolean
@@ -3963,12 +4012,13 @@ export namespace Prisma {
     nome?: boolean
     descricao?: boolean
     preco?: boolean
+    imagemUrl?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     estabelecimentoId?: boolean
   }
 
-  export type ProdutoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "preco" | "createdAt" | "updatedAt" | "estabelecimentoId", ExtArgs["result"]["produto"]>
+  export type ProdutoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "preco" | "imagemUrl" | "createdAt" | "updatedAt" | "estabelecimentoId", ExtArgs["result"]["produto"]>
   export type ProdutoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     estabelecimento?: boolean | EstabelecimentoDefaultArgs<ExtArgs>
     itensDePedido?: boolean | Produto$itensDePedidoArgs<ExtArgs>
@@ -3992,6 +4042,7 @@ export namespace Prisma {
       nome: string
       descricao: string | null
       preco: number
+      imagemUrl: string | null
       createdAt: Date
       updatedAt: Date
       estabelecimentoId: number
@@ -4424,6 +4475,7 @@ export namespace Prisma {
     readonly nome: FieldRef<"Produto", 'String'>
     readonly descricao: FieldRef<"Produto", 'String'>
     readonly preco: FieldRef<"Produto", 'Float'>
+    readonly imagemUrl: FieldRef<"Produto", 'String'>
     readonly createdAt: FieldRef<"Produto", 'DateTime'>
     readonly updatedAt: FieldRef<"Produto", 'DateTime'>
     readonly estabelecimentoId: FieldRef<"Produto", 'Int'>
@@ -4894,7 +4946,7 @@ export namespace Prisma {
   export type PedidoMinAggregateOutputType = {
     id: number | null
     total: number | null
-    mesa: string | null
+    endereco: string | null
     status: $Enums.StatusPedido | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4905,7 +4957,7 @@ export namespace Prisma {
   export type PedidoMaxAggregateOutputType = {
     id: number | null
     total: number | null
-    mesa: string | null
+    endereco: string | null
     status: $Enums.StatusPedido | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4916,7 +4968,7 @@ export namespace Prisma {
   export type PedidoCountAggregateOutputType = {
     id: number
     total: number
-    mesa: number
+    endereco: number
     status: number
     createdAt: number
     updatedAt: number
@@ -4943,7 +4995,7 @@ export namespace Prisma {
   export type PedidoMinAggregateInputType = {
     id?: true
     total?: true
-    mesa?: true
+    endereco?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -4954,7 +5006,7 @@ export namespace Prisma {
   export type PedidoMaxAggregateInputType = {
     id?: true
     total?: true
-    mesa?: true
+    endereco?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -4965,7 +5017,7 @@ export namespace Prisma {
   export type PedidoCountAggregateInputType = {
     id?: true
     total?: true
-    mesa?: true
+    endereco?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -5063,7 +5115,7 @@ export namespace Prisma {
   export type PedidoGroupByOutputType = {
     id: number
     total: number
-    mesa: string
+    endereco: string
     status: $Enums.StatusPedido
     createdAt: Date
     updatedAt: Date
@@ -5093,7 +5145,7 @@ export namespace Prisma {
   export type PedidoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     total?: boolean
-    mesa?: boolean
+    endereco?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5108,7 +5160,7 @@ export namespace Prisma {
   export type PedidoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     total?: boolean
-    mesa?: boolean
+    endereco?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5121,7 +5173,7 @@ export namespace Prisma {
   export type PedidoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     total?: boolean
-    mesa?: boolean
+    endereco?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5134,7 +5186,7 @@ export namespace Prisma {
   export type PedidoSelectScalar = {
     id?: boolean
     total?: boolean
-    mesa?: boolean
+    endereco?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -5142,7 +5194,7 @@ export namespace Prisma {
     estabelecimentoId?: boolean
   }
 
-  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "total" | "mesa" | "status" | "createdAt" | "updatedAt" | "usuarioId" | "estabelecimentoId", ExtArgs["result"]["pedido"]>
+  export type PedidoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "total" | "endereco" | "status" | "createdAt" | "updatedAt" | "usuarioId" | "estabelecimentoId", ExtArgs["result"]["pedido"]>
   export type PedidoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     estabelecimento?: boolean | EstabelecimentoDefaultArgs<ExtArgs>
@@ -5168,7 +5220,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       total: number
-      mesa: string
+      endereco: string
       status: $Enums.StatusPedido
       createdAt: Date
       updatedAt: Date
@@ -5602,7 +5654,7 @@ export namespace Prisma {
   interface PedidoFieldRefs {
     readonly id: FieldRef<"Pedido", 'Int'>
     readonly total: FieldRef<"Pedido", 'Float'>
-    readonly mesa: FieldRef<"Pedido", 'String'>
+    readonly endereco: FieldRef<"Pedido", 'String'>
     readonly status: FieldRef<"Pedido", 'StatusPedido'>
     readonly createdAt: FieldRef<"Pedido", 'DateTime'>
     readonly updatedAt: FieldRef<"Pedido", 'DateTime'>
@@ -7204,6 +7256,9 @@ export namespace Prisma {
   export const EstabelecimentoScalarFieldEnum: {
     id: 'id',
     nome: 'nome',
+    descricao: 'descricao',
+    cnpj: 'cnpj',
+    capaUrl: 'capaUrl',
     endereco: 'endereco',
     ativo: 'ativo',
     createdAt: 'createdAt',
@@ -7219,6 +7274,7 @@ export namespace Prisma {
     nome: 'nome',
     descricao: 'descricao',
     preco: 'preco',
+    imagemUrl: 'imagemUrl',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     estabelecimentoId: 'estabelecimentoId'
@@ -7230,7 +7286,7 @@ export namespace Prisma {
   export const PedidoScalarFieldEnum: {
     id: 'id',
     total: 'total',
-    mesa: 'mesa',
+    endereco: 'endereco',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -7433,6 +7489,9 @@ export namespace Prisma {
     NOT?: EstabelecimentoWhereInput | EstabelecimentoWhereInput[]
     id?: IntFilter<"Estabelecimento"> | number
     nome?: StringFilter<"Estabelecimento"> | string
+    descricao?: StringNullableFilter<"Estabelecimento"> | string | null
+    cnpj?: StringNullableFilter<"Estabelecimento"> | string | null
+    capaUrl?: StringNullableFilter<"Estabelecimento"> | string | null
     endereco?: StringNullableFilter<"Estabelecimento"> | string | null
     ativo?: BoolFilter<"Estabelecimento"> | boolean
     createdAt?: DateTimeFilter<"Estabelecimento"> | Date | string
@@ -7446,6 +7505,9 @@ export namespace Prisma {
   export type EstabelecimentoOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrderInput | SortOrder
+    cnpj?: SortOrderInput | SortOrder
+    capaUrl?: SortOrderInput | SortOrder
     endereco?: SortOrderInput | SortOrder
     ativo?: SortOrder
     createdAt?: SortOrder
@@ -7462,6 +7524,9 @@ export namespace Prisma {
     OR?: EstabelecimentoWhereInput[]
     NOT?: EstabelecimentoWhereInput | EstabelecimentoWhereInput[]
     nome?: StringFilter<"Estabelecimento"> | string
+    descricao?: StringNullableFilter<"Estabelecimento"> | string | null
+    cnpj?: StringNullableFilter<"Estabelecimento"> | string | null
+    capaUrl?: StringNullableFilter<"Estabelecimento"> | string | null
     endereco?: StringNullableFilter<"Estabelecimento"> | string | null
     ativo?: BoolFilter<"Estabelecimento"> | boolean
     createdAt?: DateTimeFilter<"Estabelecimento"> | Date | string
@@ -7475,6 +7540,9 @@ export namespace Prisma {
   export type EstabelecimentoOrderByWithAggregationInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrderInput | SortOrder
+    cnpj?: SortOrderInput | SortOrder
+    capaUrl?: SortOrderInput | SortOrder
     endereco?: SortOrderInput | SortOrder
     ativo?: SortOrder
     createdAt?: SortOrder
@@ -7493,6 +7561,9 @@ export namespace Prisma {
     NOT?: EstabelecimentoScalarWhereWithAggregatesInput | EstabelecimentoScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Estabelecimento"> | number
     nome?: StringWithAggregatesFilter<"Estabelecimento"> | string
+    descricao?: StringNullableWithAggregatesFilter<"Estabelecimento"> | string | null
+    cnpj?: StringNullableWithAggregatesFilter<"Estabelecimento"> | string | null
+    capaUrl?: StringNullableWithAggregatesFilter<"Estabelecimento"> | string | null
     endereco?: StringNullableWithAggregatesFilter<"Estabelecimento"> | string | null
     ativo?: BoolWithAggregatesFilter<"Estabelecimento"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Estabelecimento"> | Date | string
@@ -7508,6 +7579,7 @@ export namespace Prisma {
     nome?: StringFilter<"Produto"> | string
     descricao?: StringNullableFilter<"Produto"> | string | null
     preco?: FloatFilter<"Produto"> | number
+    imagemUrl?: StringNullableFilter<"Produto"> | string | null
     createdAt?: DateTimeFilter<"Produto"> | Date | string
     updatedAt?: DateTimeFilter<"Produto"> | Date | string
     estabelecimentoId?: IntFilter<"Produto"> | number
@@ -7520,6 +7592,7 @@ export namespace Prisma {
     nome?: SortOrder
     descricao?: SortOrderInput | SortOrder
     preco?: SortOrder
+    imagemUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     estabelecimentoId?: SortOrder
@@ -7535,6 +7608,7 @@ export namespace Prisma {
     nome?: StringFilter<"Produto"> | string
     descricao?: StringNullableFilter<"Produto"> | string | null
     preco?: FloatFilter<"Produto"> | number
+    imagemUrl?: StringNullableFilter<"Produto"> | string | null
     createdAt?: DateTimeFilter<"Produto"> | Date | string
     updatedAt?: DateTimeFilter<"Produto"> | Date | string
     estabelecimentoId?: IntFilter<"Produto"> | number
@@ -7547,6 +7621,7 @@ export namespace Prisma {
     nome?: SortOrder
     descricao?: SortOrderInput | SortOrder
     preco?: SortOrder
+    imagemUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     estabelecimentoId?: SortOrder
@@ -7565,6 +7640,7 @@ export namespace Prisma {
     nome?: StringWithAggregatesFilter<"Produto"> | string
     descricao?: StringNullableWithAggregatesFilter<"Produto"> | string | null
     preco?: FloatWithAggregatesFilter<"Produto"> | number
+    imagemUrl?: StringNullableWithAggregatesFilter<"Produto"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Produto"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Produto"> | Date | string
     estabelecimentoId?: IntWithAggregatesFilter<"Produto"> | number
@@ -7576,7 +7652,7 @@ export namespace Prisma {
     NOT?: PedidoWhereInput | PedidoWhereInput[]
     id?: IntFilter<"Pedido"> | number
     total?: FloatFilter<"Pedido"> | number
-    mesa?: StringFilter<"Pedido"> | string
+    endereco?: StringFilter<"Pedido"> | string
     status?: EnumStatusPedidoFilter<"Pedido"> | $Enums.StatusPedido
     createdAt?: DateTimeFilter<"Pedido"> | Date | string
     updatedAt?: DateTimeFilter<"Pedido"> | Date | string
@@ -7590,7 +7666,7 @@ export namespace Prisma {
   export type PedidoOrderByWithRelationInput = {
     id?: SortOrder
     total?: SortOrder
-    mesa?: SortOrder
+    endereco?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7607,7 +7683,7 @@ export namespace Prisma {
     OR?: PedidoWhereInput[]
     NOT?: PedidoWhereInput | PedidoWhereInput[]
     total?: FloatFilter<"Pedido"> | number
-    mesa?: StringFilter<"Pedido"> | string
+    endereco?: StringFilter<"Pedido"> | string
     status?: EnumStatusPedidoFilter<"Pedido"> | $Enums.StatusPedido
     createdAt?: DateTimeFilter<"Pedido"> | Date | string
     updatedAt?: DateTimeFilter<"Pedido"> | Date | string
@@ -7621,7 +7697,7 @@ export namespace Prisma {
   export type PedidoOrderByWithAggregationInput = {
     id?: SortOrder
     total?: SortOrder
-    mesa?: SortOrder
+    endereco?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -7640,7 +7716,7 @@ export namespace Prisma {
     NOT?: PedidoScalarWhereWithAggregatesInput | PedidoScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Pedido"> | number
     total?: FloatWithAggregatesFilter<"Pedido"> | number
-    mesa?: StringWithAggregatesFilter<"Pedido"> | string
+    endereco?: StringWithAggregatesFilter<"Pedido"> | string
     status?: EnumStatusPedidoWithAggregatesFilter<"Pedido"> | $Enums.StatusPedido
     createdAt?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Pedido"> | Date | string
@@ -7783,6 +7859,9 @@ export namespace Prisma {
 
   export type EstabelecimentoCreateInput = {
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -7795,6 +7874,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedCreateInput = {
     id?: number
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -7806,6 +7888,9 @@ export namespace Prisma {
 
   export type EstabelecimentoUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7818,6 +7903,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7830,6 +7918,9 @@ export namespace Prisma {
   export type EstabelecimentoCreateManyInput = {
     id?: number
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -7839,6 +7930,9 @@ export namespace Prisma {
 
   export type EstabelecimentoUpdateManyMutationInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7848,6 +7942,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7859,6 +7956,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     estabelecimento: EstabelecimentoCreateNestedOneWithoutProdutosInput
@@ -7870,6 +7968,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     estabelecimentoId: number
@@ -7880,6 +7979,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     estabelecimento?: EstabelecimentoUpdateOneRequiredWithoutProdutosNestedInput
@@ -7891,6 +7991,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     estabelecimentoId?: IntFieldUpdateOperationsInput | number
@@ -7902,6 +8003,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     estabelecimentoId: number
@@ -7911,6 +8013,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7920,6 +8023,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     estabelecimentoId?: IntFieldUpdateOperationsInput | number
@@ -7927,7 +8031,7 @@ export namespace Prisma {
 
   export type PedidoCreateInput = {
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7939,7 +8043,7 @@ export namespace Prisma {
   export type PedidoUncheckedCreateInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7950,7 +8054,7 @@ export namespace Prisma {
 
   export type PedidoUpdateInput = {
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7962,7 +8066,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7974,7 +8078,7 @@ export namespace Prisma {
   export type PedidoCreateManyInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -7984,7 +8088,7 @@ export namespace Prisma {
 
   export type PedidoUpdateManyMutationInput = {
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7993,7 +8097,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8242,6 +8346,9 @@ export namespace Prisma {
   export type EstabelecimentoCountOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
+    cnpj?: SortOrder
+    capaUrl?: SortOrder
     endereco?: SortOrder
     ativo?: SortOrder
     createdAt?: SortOrder
@@ -8257,6 +8364,9 @@ export namespace Prisma {
   export type EstabelecimentoMaxOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
+    cnpj?: SortOrder
+    capaUrl?: SortOrder
     endereco?: SortOrder
     ativo?: SortOrder
     createdAt?: SortOrder
@@ -8267,6 +8377,9 @@ export namespace Prisma {
   export type EstabelecimentoMinOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
+    cnpj?: SortOrder
+    capaUrl?: SortOrder
     endereco?: SortOrder
     ativo?: SortOrder
     createdAt?: SortOrder
@@ -8336,6 +8449,7 @@ export namespace Prisma {
     nome?: SortOrder
     descricao?: SortOrder
     preco?: SortOrder
+    imagemUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     estabelecimentoId?: SortOrder
@@ -8352,6 +8466,7 @@ export namespace Prisma {
     nome?: SortOrder
     descricao?: SortOrder
     preco?: SortOrder
+    imagemUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     estabelecimentoId?: SortOrder
@@ -8362,6 +8477,7 @@ export namespace Prisma {
     nome?: SortOrder
     descricao?: SortOrder
     preco?: SortOrder
+    imagemUrl?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     estabelecimentoId?: SortOrder
@@ -8399,7 +8515,7 @@ export namespace Prisma {
   export type PedidoCountOrderByAggregateInput = {
     id?: SortOrder
     total?: SortOrder
-    mesa?: SortOrder
+    endereco?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8417,7 +8533,7 @@ export namespace Prisma {
   export type PedidoMaxOrderByAggregateInput = {
     id?: SortOrder
     total?: SortOrder
-    mesa?: SortOrder
+    endereco?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -8428,7 +8544,7 @@ export namespace Prisma {
   export type PedidoMinOrderByAggregateInput = {
     id?: SortOrder
     total?: SortOrder
-    mesa?: SortOrder
+    endereco?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -9062,6 +9178,9 @@ export namespace Prisma {
 
   export type EstabelecimentoCreateWithoutUsuarioInput = {
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9073,6 +9192,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedCreateWithoutUsuarioInput = {
     id?: number
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9093,7 +9215,7 @@ export namespace Prisma {
 
   export type PedidoCreateWithoutUsuarioInput = {
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9104,7 +9226,7 @@ export namespace Prisma {
   export type PedidoUncheckedCreateWithoutUsuarioInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9144,6 +9266,9 @@ export namespace Prisma {
     NOT?: EstabelecimentoScalarWhereInput | EstabelecimentoScalarWhereInput[]
     id?: IntFilter<"Estabelecimento"> | number
     nome?: StringFilter<"Estabelecimento"> | string
+    descricao?: StringNullableFilter<"Estabelecimento"> | string | null
+    cnpj?: StringNullableFilter<"Estabelecimento"> | string | null
+    capaUrl?: StringNullableFilter<"Estabelecimento"> | string | null
     endereco?: StringNullableFilter<"Estabelecimento"> | string | null
     ativo?: BoolFilter<"Estabelecimento"> | boolean
     createdAt?: DateTimeFilter<"Estabelecimento"> | Date | string
@@ -9173,7 +9298,7 @@ export namespace Prisma {
     NOT?: PedidoScalarWhereInput | PedidoScalarWhereInput[]
     id?: IntFilter<"Pedido"> | number
     total?: FloatFilter<"Pedido"> | number
-    mesa?: StringFilter<"Pedido"> | string
+    endereco?: StringFilter<"Pedido"> | string
     status?: EnumStatusPedidoFilter<"Pedido"> | $Enums.StatusPedido
     createdAt?: DateTimeFilter<"Pedido"> | Date | string
     updatedAt?: DateTimeFilter<"Pedido"> | Date | string
@@ -9209,6 +9334,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     itensDePedido?: PedidoItemCreateNestedManyWithoutProdutoInput
@@ -9219,6 +9345,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     itensDePedido?: PedidoItemUncheckedCreateNestedManyWithoutProdutoInput
@@ -9236,7 +9363,7 @@ export namespace Prisma {
 
   export type PedidoCreateWithoutEstabelecimentoInput = {
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9247,7 +9374,7 @@ export namespace Prisma {
   export type PedidoUncheckedCreateWithoutEstabelecimentoInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9319,6 +9446,7 @@ export namespace Prisma {
     nome?: StringFilter<"Produto"> | string
     descricao?: StringNullableFilter<"Produto"> | string | null
     preco?: FloatFilter<"Produto"> | number
+    imagemUrl?: StringNullableFilter<"Produto"> | string | null
     createdAt?: DateTimeFilter<"Produto"> | Date | string
     updatedAt?: DateTimeFilter<"Produto"> | Date | string
     estabelecimentoId?: IntFilter<"Produto"> | number
@@ -9342,6 +9470,9 @@ export namespace Prisma {
 
   export type EstabelecimentoCreateWithoutProdutosInput = {
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9353,6 +9484,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedCreateWithoutProdutosInput = {
     id?: number
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9404,6 +9538,9 @@ export namespace Prisma {
 
   export type EstabelecimentoUpdateWithoutProdutosInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9415,6 +9552,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedUpdateWithoutProdutosInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9477,6 +9617,9 @@ export namespace Prisma {
 
   export type EstabelecimentoCreateWithoutPedidosInput = {
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9488,6 +9631,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedCreateWithoutPedidosInput = {
     id?: number
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9569,6 +9715,9 @@ export namespace Prisma {
 
   export type EstabelecimentoUpdateWithoutPedidosInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9580,6 +9729,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedUpdateWithoutPedidosInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9606,7 +9758,7 @@ export namespace Prisma {
 
   export type PedidoCreateWithoutItensInput = {
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9617,7 +9769,7 @@ export namespace Prisma {
   export type PedidoUncheckedCreateWithoutItensInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9634,6 +9786,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     estabelecimento: EstabelecimentoCreateNestedOneWithoutProdutosInput
@@ -9644,6 +9797,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     estabelecimentoId: number
@@ -9667,7 +9821,7 @@ export namespace Prisma {
 
   export type PedidoUpdateWithoutItensInput = {
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9678,7 +9832,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateWithoutItensInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9701,6 +9855,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     estabelecimento?: EstabelecimentoUpdateOneRequiredWithoutProdutosNestedInput
@@ -9711,6 +9866,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     estabelecimentoId?: IntFieldUpdateOperationsInput | number
@@ -9719,6 +9875,9 @@ export namespace Prisma {
   export type EstabelecimentoCreateManyUsuarioInput = {
     id?: number
     nome: string
+    descricao?: string | null
+    cnpj?: string | null
+    capaUrl?: string | null
     endereco?: string | null
     ativo?: boolean
     createdAt?: Date | string
@@ -9728,7 +9887,7 @@ export namespace Prisma {
   export type PedidoCreateManyUsuarioInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9737,6 +9896,9 @@ export namespace Prisma {
 
   export type EstabelecimentoUpdateWithoutUsuarioInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9748,6 +9910,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedUpdateWithoutUsuarioInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9759,6 +9924,9 @@ export namespace Prisma {
   export type EstabelecimentoUncheckedUpdateManyWithoutUsuarioInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    cnpj?: NullableStringFieldUpdateOperationsInput | string | null
+    capaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     endereco?: NullableStringFieldUpdateOperationsInput | string | null
     ativo?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9767,7 +9935,7 @@ export namespace Prisma {
 
   export type PedidoUpdateWithoutUsuarioInput = {
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9778,7 +9946,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateWithoutUsuarioInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9789,7 +9957,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateManyWithoutUsuarioInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9801,6 +9969,7 @@ export namespace Prisma {
     nome: string
     descricao?: string | null
     preco: number
+    imagemUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9808,7 +9977,7 @@ export namespace Prisma {
   export type PedidoCreateManyEstabelecimentoInput = {
     id?: number
     total: number
-    mesa: string
+    endereco: string
     status?: $Enums.StatusPedido
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -9819,6 +9988,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     itensDePedido?: PedidoItemUpdateManyWithoutProdutoNestedInput
@@ -9829,6 +9999,7 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     itensDePedido?: PedidoItemUncheckedUpdateManyWithoutProdutoNestedInput
@@ -9839,13 +10010,14 @@ export namespace Prisma {
     nome?: StringFieldUpdateOperationsInput | string
     descricao?: NullableStringFieldUpdateOperationsInput | string | null
     preco?: FloatFieldUpdateOperationsInput | number
+    imagemUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PedidoUpdateWithoutEstabelecimentoInput = {
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9856,7 +10028,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateWithoutEstabelecimentoInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9867,7 +10039,7 @@ export namespace Prisma {
   export type PedidoUncheckedUpdateManyWithoutEstabelecimentoInput = {
     id?: IntFieldUpdateOperationsInput | number
     total?: FloatFieldUpdateOperationsInput | number
-    mesa?: StringFieldUpdateOperationsInput | string
+    endereco?: StringFieldUpdateOperationsInput | string
     status?: EnumStatusPedidoFieldUpdateOperationsInput | $Enums.StatusPedido
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

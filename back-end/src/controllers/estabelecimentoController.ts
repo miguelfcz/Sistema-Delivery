@@ -10,7 +10,7 @@ interface AuthRequest extends Request {
 export class EstabelecimentoController {
 
     async create(req: AuthRequest, res: Response): Promise<Response> {
-        const { nome, endereco } = req.body;
+        const { nome, endereco, cnpj, descricao, capaUrl } = req.body;
 
         if (!req.user) {
             return res.status(401).json({ message: 'Acesso não autorizado.' });
@@ -21,8 +21,12 @@ export class EstabelecimentoController {
             return res.status(400).json({ message: 'O nome do estabelecimento é obrigatório.' });
         }
 
+        if (cnpj && cnpj.length < 14) {
+            return res.status(400).json({message:'CNPJ inválido.'})
+        }
+
         try {
-            const novoEstabelecimento = await estabelecimentoService.create({ nome, endereco, usuarioId, ativo: true });
+            const novoEstabelecimento = await estabelecimentoService.create({ nome, endereco, cnpj, descricao, capaUrl, usuarioId, ativo: true });
             return res.status(201).json(novoEstabelecimento);
         } catch (error) {
             return res.status(500).json({ message: 'Erro interno ao criar estabelecimento.' });
@@ -39,7 +43,7 @@ export class EstabelecimentoController {
         const usuarioDonoId = req.user.id;
 
         try {
-            const estabelecimento = await estabelecimentoService.update(id, { nome, endereco }, usuarioDonoId);
+            const estabelecimento = await estabelecimentoService.update(id, { nome, endereco}, usuarioDonoId);
             return res.status(200).json(estabelecimento);
         } catch (error) {
             if (error instanceof Error) {

@@ -1,7 +1,16 @@
 import prisma from '../db/prisma';
 import { Estabelecimento } from '../../generated/prisma';
 
-type EstabelecimentoCreateData = Omit<Estabelecimento, 'id' | 'createdAt' | 'updatedAt'>;
+interface EstabelecimentoCreateData {
+    nome: string;
+    descricao?: string;
+    cnpj?: string;
+    capaUrl?: string;
+    endereco?: string;
+    usuarioId: number;
+    ativo: boolean;
+}
+
 type EstabelecimentoUpdateData = Partial<Pick<Estabelecimento, 'nome' | 'endereco'>>;
 
 export class EstabelecimentoService {

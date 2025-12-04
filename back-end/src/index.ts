@@ -3,9 +3,10 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import uploadRoute from './routes/uploadRoute';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig';
-
 
 import userRoute from './routes/userRoute';
 import authRoute from './routes/authRoute';
@@ -25,6 +26,9 @@ app.use('/api/auth', authRoute);
 app.use('/api/estabelecimentos', estabelecimentoRoute);
 app.use('/api/produtos', produtoRoute);
 app.use('/api/pedidos', pedidoRoute);
+
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+app.use('/api/upload', uploadRoute);
 
 app.get('/', (req, res) => {
     res.send("Cardapio Digital API - Documentação disponível em /api-docs")

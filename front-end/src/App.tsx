@@ -1,19 +1,41 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/auth/Login';
+import Login from './pages/login/login';
+import Cadastro from './pages/cadastro/cadastro';
 import { AuthProvider } from './context/authContext';
 import { PrivateRoute } from './router/privateRoute';
+import Apresentation from './pages/apresentation/apresentation';
+import Dashboard from './pages/dashboard/dashboard';
+import Restaurante from './pages/perfil_Restaurante/restaurante';
+import CadastroRestaurante from './pages/cadastroRestaurante/cadastroRestaurante';
+import Search from './pages/search/search';
+import AdicionarItem from './pages/AdicionarItemCardapio/AdicionarItemCardapio';
+import Finalizar_pedido from './pages/carrinho_finalizar/finalizar_compra';
+import Comanda from './pages/comanda/comanda';
+
 
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/cadastro-usuario" element={<Cadastro />} />
+          <Route path="/home" element={<Apresentation />} />
+     
 
           <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<h1>Bem-vindo ao Dashboard! (Em construção)</h1>} />
+            <Route path="/restaurante" element={<Restaurante />} />
+            <Route path="/cadastro-restaurante" element={<CadastroRestaurante />} />
+            <Route path="/search" element={<Search />} />"
+            <Route path="/adicionar-item" element={<AdicionarItem />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/restaurante/:id" element={<Restaurante />} />  
+            <Route path="/restaurante/:id/adicionar-item" element={<AdicionarItem />} />
+            <Route path="/finalizar-pedido" element={<Finalizar_pedido />} />
+            <Route path="/comanda" element={<Comanda />} />
           </Route>
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

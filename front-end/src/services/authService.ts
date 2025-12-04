@@ -14,3 +14,14 @@ export const authService = {
         return response.data;
     }
 };
+export const cadastroService ={
+    cadastro: async (nome: string, email: string, senha: string) => {
+    // Corrigido: Removido o '/api' duplicado do endpoint
+    const response = await api.post<LoginResponse>('/usuarios', {
+        nome,
+        email,
+        senha
+    });
+    return response.data;
+    }
+};

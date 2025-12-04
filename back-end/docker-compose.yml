@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://postgres:cardapiodb123@db:5432/cardapiodb?schema=public
+      DATABASE_URL: postgresql://postgres:deliverydb123@db:5432/cardapiodb?schema=public
     volumes:
       - .:/app
       - /app/node_modules

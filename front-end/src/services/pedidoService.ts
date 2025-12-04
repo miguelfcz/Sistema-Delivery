@@ -1,0 +1,41 @@
+import api from './api';
+
+export interface ItemPedido {
+    produtoId: number;
+    quantidade: number;
+}
+
+export interface PedidoInput {
+    estabelecimentoId: number;
+    itens: ItemPedido[];
+    endereco: string;
+}
+
+export interface Pedido {
+    id: number;
+    total: number;
+    endereco: string;
+    status: 'PENDENTE' | 'EM_PREPARO' | 'CONCLUIDO' | 'CANCELADO';
+}
+
+export const  pedidoService = { //criando pedido
+    criar: async (dados: PedidoInput) => {
+        const response = await api.post('/pedidos', dados);
+        return response.data;
+    },
+
+    listarMeus: async () => {
+        const response = await api.get('/pedidos');
+        return response.data;
+    },
+
+    listarPorEstabelecimento: async (idEstabelecimento: number) => {
+        const response = await api.get(`/pedidos/estabelecimento?id=${idEstabelecimento}`);
+        return response.data;
+    },
+
+    atualizarStatus: async (idPedido: number, status: string) => {
+        const response = await api.patch(`/pedidos/${idPedido}/status`, {status});
+        return response.data;
+    }
+}

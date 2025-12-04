@@ -5,10 +5,12 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
+    // 1. Corrigido para usar a chave correta do localStorage
+    const token = localStorage.getItem('@Cardapiu:token');
 
     if (token) {
-        config.headers.Authorization = 'Bearer' + token;
+        // 2. Corrigido para adicionar o espaço depois de "Bearer"
+        config.headers.Authorization = 'Bearer ' + token;
 
     }
     return config;
