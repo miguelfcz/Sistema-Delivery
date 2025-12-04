@@ -2,56 +2,65 @@ import Footer from '../../components/layout/footer/footer';
 import Navbar from '../../components/layout/navbar/navbar';
 import Paper from '@mui/material/Paper';
 import { Link as MuiRouterLink, useSearchParams } from 'react-router-dom';
-import React, { useState } from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, IconButton, Typography, CircularProgress } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
-import 'react-multi-carousel/lib/styles.css';
+import 'react-multi-carousel/lib/styles.css'; // 💡 Importação necessária
+import { estabelecimentoService } from '../../services/estabelecimentoService';
+import type { Estabelecimento as EstabelecimentoType } from '../../services/estabelecimentoService';
 
-
-
-
-
-const listProducts = [
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', valor: '99,90' ,img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', valor: '38,90' ,img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', valor: '99,90' ,img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', valor: '38,90' ,img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', valor: '99,90' ,img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', valor: '38,90' ,img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', valor: '99,90' ,img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', valor: '38,90' ,img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', valor: '99,90' ,img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', valor: '38,90' ,img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-  { id: 'prato_001', name: 'Prato de Carne', desc: 'Descrição...', valor: '99,90' ,img: 'https://placehold.co/80x80/999999/white?text=Carne' },
-  { id: 'prato_002', name: 'Feijoada', desc: 'Descrição...', valor: '38,90' ,img: 'https://placehold.co/80x80/666666/white?text=Feijoada' },
-
-];
+// 1. Definir a URL base da sua API
+const API_BASE_URL = 'http://localhost:3000';
 
 const Search = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get('q') || '';
-    const [produtos, setProdutos] = useState<Produto[]>([]);
+    
+    // 2. Criar uma função para montar a URL completa da imagem
+    const getImageUrl = (url: string | null | undefined) => {
+        if (!url) return 'https://placehold.co/80x80/eeeeee/cccccc?text=Sem+Imagem';
+        if (url.startsWith('http')) return url;
+        return `${API_BASE_URL}${url}`;
+    };
+    
+    const [estabelecimentos, setEstabelecimentos] = useState<EstabelecimentoType[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    // Filtra os produtos que correspondem à busca (ignorando maiúsculas/minúsculas)
-    const matchedProducts = listProducts.filter(product =>
-        product.name.toLowerCase().includes(query.toLowerCase())
+    useEffect(() => {
+        const fetchEstabelecimentos = async () => {
+            try {
+                const data = await estabelecimentoService.listarTodos();
+                setEstabelecimentos(data);
+            } catch (error) {
+                console.error("Erro ao buscar estabelecimentos:", error);
+                // Opcional: mostrar um alerta para o usuário
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchEstabelecimentos();
+    }, []);
+    
+    //  FILTRA OS RESTAURANTES 
+    const filteredEstabelecimentos = estabelecimentos.filter(estab =>
+        estab.nome.toLowerCase().includes(query.toLowerCase())
     );
 
-    // Filtra o restante dos produtos
-    const otherProducts = listProducts.filter(product =>
-        !product.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    // Componente reutilizável para renderizar a lista de produtos
-    const renderProductList = (products: typeof listProducts) => {
-        if (products.length === 0) {
-            return null; // Não renderiza nada se a lista estiver vazia
+    // Componente reutilizável para renderizar a lista de estabelecimentos
+    const renderEstabelecimentoList = (list: EstabelecimentoType[]) => {
+        if (list.length === 0) {
+            return (
+                <Typography variant="body1" color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
+                    Nenhum restaurante encontrado.
+                </Typography>
+            );
         }
 
-        return products.map((item, index) => (
+        return list.map((item, index) => (
             <MuiRouterLink
-                key={`${item.id}-${index}`} // Chave mais robusta
-                to={`/restaurante/${item.id}`}
+                key={item.id} // Usar o ID do estabelecimento
+                to={`/restaurante/${item.id}`} // Link correto para o perfil
                 style={{ textDecoration: 'none', color: 'inherit' }}
             >
                 <Box
@@ -64,24 +73,27 @@ const Search = () => {
                         '&:hover': {
                             opacity: 0.8,
                         },
-                        borderBottom: index < products.length - 1 ? '1px solid #cfcfcfff' : 'none'
+                        borderBottom: index < list.length - 1 ? '1px solid #cfcfcfff' : 'none',
+                        // 💡 Adicionado espaço inferior para melhor visualização
+                        mb: index < list.length - 1 ? 2 : 0 
                     }}
                 >
-                    {/* Imagem do Item da Lista */}
+                    {/* Imagem do Restaurante */}
                     <Box
                         component="img"
-                        src={item.img}
-                        alt={item.name}
+                        // 💡 Usar a capaUrl ou uma imagem placeholder
+                        src={getImageUrl(item.capaUrl)} // 3. Usar a função para obter a URL correta
+                        alt={`Capa do ${item.nome}`}
                         sx={{ width: 80, height: 80, objectFit: 'cover', borderRadius: 1, mr: 2 }}
                     />
 
-                    {/* Detalhes da Lista */}
+                    {/* Detalhes do Restaurante */}
                     <Box>
                         <Typography variant="h6" fontWeight="600" sx={{ mb: 0.5 }}>
-                            {item.name}
+                            {item.nome} 
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            {item.desc}
+                            {item.descricao || item.endereco}
                         </Typography>
                     </Box>
                 </Box>
@@ -94,30 +106,22 @@ const Search = () => {
             <Navbar />
             <Paper elevation={1} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: 900, margin: '0 auto', mt: 4, mb: 4, backgroundColor: '#f5f5f5', p: { xs: 2, md: 4 } }}>
                 <Typography variant="h5" component="h2" fontWeight="bold" sx={{ mb: 7 }}>
-                    {query ? `Resultados para "${query}"` : 'Todos os Itens'}
+                    {query ? `Resultados para "${query}"` : 'Todos os Restaurantes'} 
                 </Typography>
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '68vw', maxWidth: 850 }}>
-                    {/* Renderiza os produtos que correspondem à busca */}
-                    {renderProductList(matchedProducts)}
-
-                    {/* Adiciona um separador se ambas as listas tiverem itens */}
-                    {matchedProducts.length > 0 && otherProducts.length > 0 && (
-                        <Box sx={{ my: 2, borderBottom: '2px solid #cccccc' }}>
-                            <Typography variant="caption" color="text.secondary" sx={{ position: 'relative', top: '10px', backgroundColor: '#f5f5f5', px: 1 }}>
-                                Outros itens
-                            </Typography>
+                    {loading ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+                            <CircularProgress />
                         </Box>
+                    ) : (
+                        renderEstabelecimentoList(filteredEstabelecimentos)
                     )}
-
-                    {/* Renderiza os outros produtos */}
-                    {renderProductList(otherProducts)}
                 </Box>
             </Paper>
             <Footer />
         </Box>
     );
-
 };
 
 export default Search;
