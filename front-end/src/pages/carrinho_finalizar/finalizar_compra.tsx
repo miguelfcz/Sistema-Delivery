@@ -84,7 +84,8 @@ const Finalizar_pedido = () => {
             navigate('/dashboard'); 
 
         } catch (e: any) {
-            console.error('Erro ao criar pedido:', e);
+            console.log("Resposta completa do erro:", e.response);
+            
             setError(e.response?.data?.message || 'Erro ao processar o pedido. Tente novamente.');
         }
     };

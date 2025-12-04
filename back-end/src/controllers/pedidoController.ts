@@ -26,10 +26,15 @@ export class PedidoController {
             const novoPedido = await pedidoService.createPedido({ usuarioId, estabelecimentoId, itens, endereco });
             return res.status(201).json(novoPedido);
         } catch (error) {
+            // 🚨 ADICIONE ESTA LINHA para ver o erro no console do backend 🚨
+            console.error('Erro detalhado ao criar pedido:', error);
+
             if (error instanceof Error) {
                 if (error.message.includes('Produto não encontrado')) {
                     return res.status(404).json({ message: error.message });
                 }
+                // 💡 RETORNA A MENSAGEM DO ERRO PRISMA
+                return res.status(500).json({ message: `Erro Interno Detalhado: ${error.message}` });
             }
             return res.status(500).json({ message: 'Um erro inesperado ocorreu ao criar o pedido.' });
         }
