@@ -1,18 +1,12 @@
 import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from '@mui/material';
 import {useNavigate, Link as RouterLink} from 'react-router-dom';
@@ -68,14 +62,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const { user, username, signOut } = useAuth(); // 1. Acessa o contexto de autenticação e a função signOut
+  const { user, username, signOut } = useAuth(); // 1. Acessa o contexto de autenticação e a função signOut
   
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
-  const [searchValue, setSearchValue] = React.useState('');
-  const navigate = useNavigate();
-  const [anchorNotification, setAnchorNotification] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    React.useState<null | HTMLElement>(null);
+  const [searchValue, setSearchValue] = React.useState('');
+  const navigate = useNavigate();
+  const [anchorNotification, setAnchorNotification] = React.useState<null | HTMLElement>(null);
 
   const isNotificationOpen = Boolean(anchorNotification);
   const isMenuOpen = Boolean(anchorEl);
@@ -165,15 +159,11 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {/* 2. Exibe o nome do usuário se ele estiver logado */}
-      {user && <MenuItem disabled>Olá, {user.nome}</MenuItem>}
+      {/* 2. Exibe o nome do usuário (username) se ele estiver logado */}
+      {username && <MenuItem disabled>Olá, {username}</MenuItem>}
 
       {user && <MenuItem onClick={handleNavigateToCadastroRestaurante}>Criar restaurante</MenuItem>}
 
-      {/* 3. Renderiza o item "Meu Restaurante" apenas se o usuário tiver um restaurante associado */}
-      {user?.restauranteId && (
-        <MenuItem onClick={handleMenuClose}>Meu Restaurante</MenuItem>
-      )}
       
       <MenuItem onClick={handleLogout}>Sair</MenuItem>
     </Menu>

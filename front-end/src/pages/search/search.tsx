@@ -2,9 +2,8 @@ import Footer from '../../components/layout/footer/footer';
 import Navbar from '../../components/layout/navbar/navbar';
 import Paper from '@mui/material/Paper';
 import { Link as MuiRouterLink, useSearchParams } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import { Box, IconButton, Typography, CircularProgress } from '@mui/material';
-import { useAuth } from '../../hooks/useAuth';
+import { useState, useEffect } from 'react';
+import { Box, Typography, CircularProgress } from '@mui/material';
 import 'react-multi-carousel/lib/styles.css'; // 💡 Importação necessária
 import { estabelecimentoService } from '../../services/estabelecimentoService';
 import type { Estabelecimento as EstabelecimentoType } from '../../services/estabelecimentoService';
