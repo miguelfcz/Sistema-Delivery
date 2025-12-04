@@ -45,7 +45,7 @@ const Footer = () => {
         {/* Linha Divisória */}
         <Box sx={{ pt: 4, borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
           <Typography variant="body2" align="center">
-            Desenvolvido com 💙 e React/MUI.
+            Desenvolvido por Miguel Araújo e Italo Henrique.
           </Typography>
         </Box>
         

@@ -16,6 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from '@mui/material';
 import {useNavigate, Link as RouterLink} from 'react-router-dom';
+import Estatisticas from '../../../pages/estatisticas/Estatisticas';
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import icon from '../../../assets/images/white-icon.png';
@@ -166,9 +167,10 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       {/* 2. Exibe o nome do usuário se ele estiver logado */}
-      {user && <MenuItem disabled>Olá, {user.nome}</MenuItem>}
 
       {user && <MenuItem onClick={handleNavigateToCadastroRestaurante}>Criar restaurante</MenuItem>}
+
+      {user && <MenuItem onClick={() => navigate('/estatisticas')}>Estatísticas</MenuItem>}
 
       {/* 3. Renderiza o item "Meu Restaurante" apenas se o usuário tiver um restaurante associado */}
       {user?.restauranteId && (
