@@ -184,7 +184,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Miguel\\Desktop\\PROGRAMACAO\\JavaScript-TypeScript\\Cardapio digital\\back-end\\generated\\prisma",
+      "value": "C:\\Users\\Miguel\\Desktop\\PROGRAMACAO\\JavaScript-TypeScript\\final-cardapio\\cardapio-do-zero\\back-end\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -195,10 +195,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "linux-musl-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Miguel\\Desktop\\PROGRAMACAO\\JavaScript-TypeScript\\Cardapio digital\\back-end\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Miguel\\Desktop\\PROGRAMACAO\\JavaScript-TypeScript\\final-cardapio\\cardapio-do-zero\\back-end\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -212,6 +216,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -220,8 +225,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum StatusPedido {\n  PENDENTE\n  EM_PREPARO\n  CONCLUIDO\n  CANCELADO\n}\n\nmodel Usuario {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  nome      String\n  senha     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  estabelecimentos Estabelecimento[]\n  pedidos          Pedido[]\n\n  @@map(\"usuarios\")\n}\n\nmodel Estabelecimento {\n  id        Int      @id @default(autoincrement())\n  nome      String\n  descricao String?\n  cnpj      String?\n  capaUrl   String?\n  endereco  String?\n  ativo     Boolean  @default(true)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  usuarioId Int\n  usuario   Usuario @relation(fields: [usuarioId], references: [id])\n\n  produtos Produto[]\n  pedidos  Pedido[]\n\n  @@map(\"estabelecimentos\")\n}\n\nmodel Produto {\n  id        Int      @id @default(autoincrement())\n  nome      String\n  descricao String?\n  preco     Float\n  imagemUrl String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  estabelecimentoId Int\n  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])\n\n  itensDePedido PedidoItem[]\n\n  @@map(\"produtos\")\n}\n\nmodel Pedido {\n  id        Int          @id @default(autoincrement())\n  total     Float\n  endereco  String\n  status    StatusPedido @default(PENDENTE)\n  createdAt DateTime     @default(now())\n  updatedAt DateTime     @updatedAt\n\n  usuarioId Int\n  usuario   Usuario @relation(fields: [usuarioId], references: [id])\n\n  estabelecimentoId Int\n  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])\n\n  itens PedidoItem[]\n\n  @@map(\"pedidos\")\n}\n\nmodel PedidoItem {\n  id            Int   @id @default(autoincrement())\n  quantidade    Int\n  precoUnitario Float\n\n  pedidoId Int\n  pedido   Pedido @relation(fields: [pedidoId], references: [id])\n\n  produtoId Int\n  produto   Produto @relation(fields: [produtoId], references: [id])\n\n  createdAt DateTime @default(now())\n\n  @@map(\"pedido_itens\")\n}\n",
-  "inlineSchemaHash": "70f7d42282893c4fa2317445c72f73b2df849559e8df9fef3f224d08787d9301",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../generated/prisma\"\n  binaryTargets = [\"native\", \"linux-musl-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum StatusPedido {\n  PENDENTE\n  EM_PREPARO\n  CONCLUIDO\n  CANCELADO\n}\n\nmodel Usuario {\n  id        Int      @id @default(autoincrement())\n  email     String   @unique\n  nome      String\n  senha     String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  estabelecimentos Estabelecimento[]\n  pedidos          Pedido[]\n\n  @@map(\"usuarios\")\n}\n\nmodel Estabelecimento {\n  id        Int      @id @default(autoincrement())\n  nome      String\n  descricao String?\n  cnpj      String?\n  capaUrl   String?\n  endereco  String?\n  ativo     Boolean  @default(true)\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  usuarioId Int\n  usuario   Usuario @relation(fields: [usuarioId], references: [id])\n\n  produtos Produto[]\n  pedidos  Pedido[]\n\n  @@map(\"estabelecimentos\")\n}\n\nmodel Produto {\n  id        Int      @id @default(autoincrement())\n  nome      String\n  descricao String?\n  preco     Float\n  imagemUrl String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  estabelecimentoId Int\n  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])\n\n  itensDePedido PedidoItem[]\n\n  @@map(\"produtos\")\n}\n\nmodel Pedido {\n  id        Int          @id @default(autoincrement())\n  total     Float\n  endereco  String\n  status    StatusPedido @default(PENDENTE)\n  createdAt DateTime     @default(now())\n  updatedAt DateTime     @updatedAt\n\n  usuarioId Int\n  usuario   Usuario @relation(fields: [usuarioId], references: [id])\n\n  estabelecimentoId Int\n  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [id])\n\n  itens PedidoItem[]\n\n  @@map(\"pedidos\")\n}\n\nmodel PedidoItem {\n  id            Int   @id @default(autoincrement())\n  quantidade    Int\n  precoUnitario Float\n\n  pedidoId Int\n  pedido   Pedido @relation(fields: [pedidoId], references: [id])\n\n  produtoId Int\n  produto   Produto @relation(fields: [produtoId], references: [id])\n\n  createdAt DateTime @default(now())\n\n  @@map(\"pedido_itens\")\n}\n",
+  "inlineSchemaHash": "9030ef93d542e6ab43bfbe3d38d6f730c30e7734522b45e758a4d4c3521e4e69",
   "copyEngine": true
 }
 config.dirname = '/'
